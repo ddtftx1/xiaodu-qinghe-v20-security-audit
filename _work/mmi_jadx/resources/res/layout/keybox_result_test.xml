@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120px"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/keybox_test_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView
+            android:textColor="#ffffff"
+            android:id="@+id/keybox_textview_hint"
+            android:paddingLeft="10px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="keybox test resut:"/>
+        <TextView
+            android:textColor="#ffffff"
+            android:id="@+id/keybox_test_result"
+            android:paddingLeft="10px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="null"/>
+    </LinearLayout>
+    <include
+        android:id="@+id/result_btn"
+        layout="@layout/result_btn_layout"/>
+</LinearLayout>

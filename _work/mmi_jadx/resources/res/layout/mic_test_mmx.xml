@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView
+            android:textSize="@dimen/headset_text_size"
+            android:id="@+id/tx_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mic_test_mmx"/>
+        <TextView
+            android:textSize="24sp"
+            android:textColor="#ff0000"
+            android:id="@+id/mic_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mic_test_record_mmx"/>
+    </LinearLayout>
+    <include
+        android:id="@+id/result_btn"
+        layout="@layout/result_btn_layout"/>
+</LinearLayout>

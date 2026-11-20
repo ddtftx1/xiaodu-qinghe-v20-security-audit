@@ -1,0 +1,47 @@
+.class public final Landroid/support/v4/content/IntentCompat;
+.super Ljava/lang/Object;
+.source "IntentCompat.java"
+
+
+# static fields
+.field public static final CATEGORY_LEANBACK_LAUNCHER:Ljava/lang/String; = "android.intent.category.LEANBACK_LAUNCHER"
+
+.field public static final EXTRA_HTML_TEXT:Ljava/lang/String; = "android.intent.extra.HTML_TEXT"
+
+.field public static final EXTRA_START_PLAYBACK:Ljava/lang/String; = "android.intent.extra.START_PLAYBACK"
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    .line 28
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 30
+    return-void
+.end method
+
+.method public static makeMainSelectorActivity(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+    .locals 1
+    .param p0, "selectorAction"    # Ljava/lang/String;
+        .annotation build Landroid/support/annotation/NonNull;
+        .end annotation
+    .end param
+    .param p1, "selectorCategory"    # Ljava/lang/String;
+        .annotation build Landroid/support/annotation/NonNull;
+        .end annotation
+    .end param
+    .annotation build Landroid/support/annotation/NonNull;
+    .end annotation
+
+    .line 77
+    sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
+
+    .line 78
+    invoke-static {p0, p1}, Landroid/content/Intent;->makeMainSelectorActivity(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+
+    move-result-object v0
+
+    return-object v0
+.end method

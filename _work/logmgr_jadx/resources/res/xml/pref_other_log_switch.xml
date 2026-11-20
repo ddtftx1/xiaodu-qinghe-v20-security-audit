@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:title="@string/sensor_log_switch_title"
+        android:key="sensor_log_switch"
+        android:defaultValue="false"/>
+    <SwitchPreference
+        android:title="@string/system_process_log_switch_title"
+        android:key="system_process_log_switch"
+        android:defaultValue="false"/>
+    <SwitchPreference
+        android:title="@string/audio_process_log_switch_title"
+        android:key="audio_process_log_switch"
+        android:defaultValue="false"/>
+    <SwitchPreference
+        android:title="@string/audio_process_voice_log_switch_title"
+        android:key="audio_process_voice_log_switch"
+        android:defaultValue="false"/>
+    <SwitchPreference
+        android:title="@string/vision_process_log_switch_title"
+        android:key="vision_process_log_switch"
+        android:defaultValue="false"/>
+</PreferenceScreen>

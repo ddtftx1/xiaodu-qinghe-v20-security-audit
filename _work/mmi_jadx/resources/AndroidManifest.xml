@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:sharedUserId="android.uid.system"
+    android:versionCode="10"
+    android:versionName="1.0_20230626"
+    android:compileSdkVersion="31"
+    android:compileSdkVersionCodename="12"
+    package="com.sprd.validationtools"
+    platformBuildVersionCode="31"
+    platformBuildVersionName="12">
+    <uses-sdk
+        android:minSdkVersion="30"
+        android:targetSdkVersion="31"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_OWNER_DATA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.CALL_PRIVILEGED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES"/>
+    <uses-permission android:name="android.permission.ACCESS_FM_RADIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_ROUTING"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.NFC"/>
+    <uses-permission android:name="android.permission.MASTER_CLEAR"/>
+    <uses-permission android:name="android.permission.ACCESS_BROADCAST_RADIO"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.CONTROL_INCALL_EXPERIENCE"/>
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
+    <uses-permission android:name="android.permission.NETWORK_SETTINGS"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
+    <permission android:name="com.android.permission.SAVE_PHASECHECK"/>
+    <application
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:name="com.sprd.validationtools.App"
+        android:allowBackup="false"
+        android:extractNativeLibs="false"
+        android:directBootAware="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory">
+        <service
+            android:name="com.sprd.validationtools.ValidationToolsService"
+            android:priority="1000"/>
+        <receiver
+            android:name="com.sprd.validationtools.difference.receiver.QmmiBroadcastReceiver"
+            android:permission="com.example.receiver.receivebroadcast"
+            android:exported="true"
+            android:process="com.android.phone">
+            <intent-filter>
+                <action android:name="com.sprocomm.intent.factory.ACTION_WRITE_FLAGS"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.qualcomm.qti.qmmicustom.QMMI_ACTION_START_FLAGS"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.qualcomm.qti.qmmicustom.DEVICEINFO_ACTION_START_FLAGS"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.qualcomm.qti.qmmicustom.ACTION_CUST_WRITE_FLAGS"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.sprd.validationtools.difference.receiver.QmmiBroadcastReceiver2"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.qualcomm.qti.qmmicustom.QMMI_ACTION_START_FLAGS2"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.qualcomm.qti.qmmicustom.DEVICEINFO_ACTION_START_FLAGS2"/>
+            </intent-filter>
+        </receiver>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="audio test"
+            android:name="com.sprd.validationtools.difference.activity.StartWaitingActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.StartWaitingActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="audio test"
+            android:name="com.sprd.validationtools.difference.activity.StartWaitingActivity2"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.StartWaitingActivity2"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <receiver
+            android:name="com.sprd.validationtools.ValidationToolsBroadcastReceiver"
+            android:exported="true"
+            android:directBootAware="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED"/>
+            </intent-filter>
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SECRET_CODE"/>
+                <data
+                    android:scheme="android_secret_code"
+                    android:host="83789"/>
+            </intent-filter>
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SECRET_CODE"/>
+                <data
+                    android:scheme="android_secret_code"
+                    android:host="654987"/>
+            </intent-filter>
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SECRET_CODE"/>
+                <data
+                    android:scheme="android_secret_code"
+                    android:host="833"/>
+            </intent-filter>
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SECRET_CODE"/>
+                <data
+                    android:scheme="android_secret_code"
+                    android:host="3682"/>
+            </intent-filter>
+            <intent-filter android:priority="1000">
+                <action android:name="com.unisoc.action.UNISOC_SECRET_CODE"/>
+                <data
+                    android:scheme="unisoc_secret_code"
+                    android:host="83789"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.sprd.validationtools.PhaseCheckBroadcastReceiver"
+            android:permission="com.android.permission.SAVE_PHASECHECK"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.sprd.validationtools.SAVE_PHASECHECK"/>
+            </intent-filter>
+        </receiver>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="audio test"
+            android:name="com.sprd.validationtools.AudioStationUpdateActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.AudioUpdateStation"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/tof_calibration_test"
+            android:name="com.sprd.validationtools.itemstest.camera.TofCalibrationTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/tpinfo_str"
+            android:name="com.sprd.validationtools.Tpinfo"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/autotouch_str"
+            android:name="com.sprd.validationtools.AutoTouchTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/prox_sensor_calibration"
+            android:name="com.sprd.validationtools.ProxSensorCalibrationTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/ai_test_title"
+            android:name="com.sprd.validationtools.itemstest.ai.AITest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/title_activity_validation_tools_main"
+            android:name="com.sprd.validationtools.ValidationToolsMainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:name="com.sprd.validationtools.AutoTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:name="com.sprd.validationtools.itemstest.ListItemTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/backlight_test"
+            android:name="com.sprd.validationtools.itemstest.backlight.BackLightTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/lcd_test"
+            android:name="com.sprd.validationtools.itemstest.lcd.ScreenColorTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/touchpoint_test"
+            android:name="com.sprd.validationtools.itemstest.tp.SingleTouchPointTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/touchpoint_test"
+            android:name="com.sprd.validationtools.itemstest.tp.SingleTouchPointTestCustom"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/touchpoint_test"
+            android:name="com.sprd.validationtools.itemstest.tp.SingleTouchPointTestSM"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/ctpruling_test"
+            android:name="com.sprd.validationtools.itemstest.tp.CTPrulingTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/touchpoint_test"
+            android:name="com.sprd.validationtools.itemstest.tp.DrawRectTestAcvity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/touchpoint_test"
+            android:name="com.sprd.validationtools.itemstest.tp.AutoTouchPointTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/muti_touchpoint_test"
+            android:name="com.sprd.validationtools.itemstest.tp.MutiTouchTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/status_indicator_red"
+            android:name="com.sprd.validationtools.itemstest.led.RedLightTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/status_indicator_green"
+            android:name="com.sprd.validationtools.itemstest.led.GreenLightTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/status_indicator_blue"
+            android:name="com.sprd.validationtools.itemstest.led.BlueLightTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/key_test"
+            android:name="com.sprd.validationtools.itemstest.keypad.KeyTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/charger_test"
+            android:name="com.sprd.validationtools.itemstest.charger.ChargerTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/charger_test"
+            android:name="com.sprd.validationtools.itemstest.charger.ChargerTestMtk"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/quick_charger_test"
+            android:name="com.sprd.validationtools.itemstest.charger.QuickChargerTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/wireless_charger_test"
+            android:name="com.sprd.validationtools.itemstest.charger.WirelessChargerTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/typec_test"
+            android:name="com.sprd.validationtools.itemstest.charger.TypeCTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/TypeC_Charger_Test"
+            android:name="com.sprd.validationtools.itemstest.charger.TypecChargerTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="TestInfo"
+            android:name="com.sprd.validationtools.testinfo.TestInfoMainActivity"
+            android:exported="false"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/rtc_test"
+            android:name="com.sprd.validationtools.itemstest.rtc.RTCTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:name="com.sprd.validationtools.itemstest.TestResultActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/rf_cali_test"
+            android:name="com.sprd.validationtools.itemstest.sysinfo.RFCALITest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/version_test"
+            android:name="com.sprd.validationtools.itemstest.sysinfo.SystemVersionTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/hardware_test"
+            android:name="com.sprd.validationtools.itemstest.sysinfo.HardwareInfoTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/smartpa_calibration_test_title"
+            android:name="com.sprd.validationtools.itemstest.audio.SmartPATest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/vibrator_test"
+            android:name="com.sprd.validationtools.itemstest.audio.MelodyTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/phone_loopback_test"
+            android:name="com.sprd.validationtools.itemstest.audio.PhoneLoopBackTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/soundtrigger_test"
+            android:name="com.sprd.validationtools.itemstest.audio.SoundTriggerTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/headset_test"
+            android:name="com.sprd.validationtools.itemstest.audio.HeadSetTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/headset_notice_mmx"
+            android:name="com.sprd.validationtools.itemstest.audio.HeadsetTestForMmx"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/mic_test_mmx"
+            android:name="com.sprd.validationtools.itemstest.audio.MicTestForMmx"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/speaker_test_mmx"
+            android:name="com.sprd.validationtools.itemstest.audio.SpeakerTestForMmx"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/receivcer_test_mmx"
+            android:name="com.sprd.validationtools.itemstest.audio.ReceivcerTestForMmx"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/fm_test"
+            android:name="com.sprd.validationtools.itemstest.fm.FMTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/bt_test"
+            android:name="com.sprd.validationtools.itemstest.bt.BluetoothTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/wifi_test"
+            android:name="com.sprd.validationtools.itemstest.wifi.WifiTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/gps_test"
+            android:name="com.sprd.validationtools.itemstest.gps.GpsTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/sdcard_test"
+            android:name="com.sprd.validationtools.itemstest.storage.SDCardTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/otg_test"
+            android:name="com.sprd.validationtools.itemstest.otg.OTGTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/sim_test"
+            android:name="com.sprd.validationtools.itemstest.telephony.SIMCardTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/phone_call_test"
+            android:name="com.sprd.validationtools.itemstest.telephony.PhoneCallTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:name="com.sprd.validationtools.background.BackgroundTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/sar_sensor_test"
+            android:name="com.sprd.validationtools.itemstest.sensor.SarSensorTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/magnetic_test"
+            android:name="com.sprd.validationtools.itemstest.sensor.MagneticTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/gyroscope_test"
+            android:name="com.sprd.validationtools.itemstest.sensor.GyroscopeTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/pressure_test"
+            android:name="com.sprd.validationtools.itemstest.sensor.PressureTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/a_sensor_calibration"
+            android:name="com.sprd.validationtools.itemstest.sensor.ASensorCalibrationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/g_sensor_calibration"
+            android:name="com.sprd.validationtools.itemstest.sensor.GSensorCalibrationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/m_sensor_calibration"
+            android:name="com.sprd.validationtools.itemstest.sensor.MSensorCalibrationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/prox_sensor_calibration"
+            android:name="com.sprd.validationtools.itemstest.sensor.ProxSensorCalibrationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/light_sensor_calibration"
+            android:name="com.sprd.validationtools.itemstest.sensor.LightSensorCalibrationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:name="com.sprd.validationtools.instructions.LaunchDualCameraCalibration"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/proximity_sensor_noise_test"
+            android:name="com.sprd.validationtools.itemstest.sensor.LsensorNoiseTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/gravity_sensor_test"
+            android:name="com.sprd.validationtools.itemstest.sensor.GsensorTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/oritention_sensor_test"
+            android:name="com.sprd.validationtools.itemstest.sensor.CompassTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/proximity_sensor_only_test"
+            android:name="com.sprd.validationtools.itemstest.sensor.PsensorTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/back_camera_title_text"
+            android:name="com.sprd.validationtools.itemstest.camera.CameraTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/front_camera_title_text"
+            android:name="com.sprd.validationtools.itemstest.camera.FrontCameraTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/front_secondary_camera_title_text"
+            android:name="com.sprd.validationtools.itemstest.camera.FrontSecondaryCameraTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/secondary_camera_title_text"
+            android:name="com.sprd.validationtools.itemstest.camera.SecondaryCameraTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/secondary_camera_title_text"
+            android:name="com.sprd.validationtools.itemstest.camera.ThirdCameraTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/cif_camera_title_text"
+            android:name="com.sprd.validationtools.itemstest.camera.CIFCameraTest"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/color_temperature_test"
+            android:name="com.sprd.validationtools.itemstest.camera.ColorTemperatureTestActivty"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/back_third_camera_title_text"
+            android:name="com.sprd.validationtools.itemstest.camera.SpwCameraTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/macrolens_camera_title_text"
+            android:name="com.sprd.validationtools.itemstest.camera.MacroLensCameraTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/nfc_test"
+            android:name="com.sprd.validationtools.itemstest.nfc.NFCTestActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/finger_print_test"
+            android:name="com.sprd.validationtools.itemstest.fingerprint.FingerprintTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc"/>
+        <activity
+            android:name="com.sprd.validationtools.MainDeviceInfo"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.MainDeviceInfo"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sprd.validationtools.instructions.SarInfo"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.SarInfo"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:name="com.sprd.validationtools.instructions.FactoryReset"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.FactoryReset"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sprd.validationtools.instructions.InternalVersion"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.InternalVersion"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sprd.validationtools.instructions.PACBAInfo"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.PACBAInfo"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sprd.validationtools.instructions.PrivateVersion"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.PrivateVersion"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sprd.validationtools.instructions.PublicVersion"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocom.mmi.PublicVersion"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.Black"
+            android:label="@string/finger_print_test"
+            android:name="com.sprd.validationtools.instructions.KeyBoxTest"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.GoogleKeyTest"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sprd.validationtools.instructions.VersionInformation"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="layoutDirection|screenSize|orientation|keyboardHidden|locale|mnc|mcc">
+            <intent-filter>
+                <action android:name="com.sprocomm.mmi.VersionInformation"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <receiver
+            android:name="com.sprd.validationtools.AudioBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.sprocomm.AudioBroadcast"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+        <activity
+            android:label="CountryCode Settings"
+            android:name="com.hmd.miscdatawriter.CountryCodeSettings"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="sprocomm.intent.action.SKUID"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

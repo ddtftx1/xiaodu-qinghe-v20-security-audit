@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="camera_ctlbar_heoght">120dp</dimen>
+    <dimen name="compat_button_inset_horizontal_material">4dp</dimen>
+    <dimen name="compat_button_inset_vertical_material">6dp</dimen>
+    <dimen name="compat_button_padding_horizontal_material">8dp</dimen>
+    <dimen name="compat_button_padding_vertical_material">4dp</dimen>
+    <dimen name="compat_control_corner_material">2dp</dimen>
+    <dimen name="compat_notification_large_icon_max_height">320dp</dimen>
+    <dimen name="compat_notification_large_icon_max_width">320dp</dimen>
+    <dimen name="headset_text_size">24sp</dimen>
+    <dimen name="list_item_height">80dp</dimen>
+    <dimen name="list_item_text_size">23sp</dimen>
+    <dimen name="lookback_bottom_size">200dp</dimen>
+    <dimen name="notification_action_icon_size">32dp</dimen>
+    <dimen name="notification_action_text_size">13sp</dimen>
+    <dimen name="notification_big_circle_margin">12dp</dimen>
+    <dimen name="notification_content_margin_start">0dp</dimen>
+    <dimen name="notification_large_icon_height">64dp</dimen>
+    <dimen name="notification_large_icon_width">64dp</dimen>
+    <dimen name="notification_main_column_padding_top">0dp</dimen>
+    <dimen name="notification_media_narrow_margin">12dp</dimen>
+    <dimen name="notification_right_icon_size">16dp</dimen>
+    <dimen name="notification_right_side_padding_top">4dp</dimen>
+    <dimen name="notification_small_icon_background_padding">3dp</dimen>
+    <dimen name="notification_small_icon_size_as_large">24dp</dimen>
+    <dimen name="notification_subtext_size">13sp</dimen>
+    <dimen name="notification_top_pad">10dp</dimen>
+    <dimen name="notification_top_pad_large_text">5dp</dimen>
+    <dimen name="pass_fail_button_size">120dp</dimen>
+    <dimen name="pass_fail_button_text_size">30sp</dimen>
+    <dimen name="qrcode_bitmap_height">200dp</dimen>
+    <dimen name="qrcode_bitmap_width">200dp</dimen>
+    <dimen name="rf_cali_scroll_height">330dp</dimen>
+    <dimen name="tof_text_size">16sp</dimen>
+    <dimen name="wifi_scroll_height">300dp</dimen>
+</resources>

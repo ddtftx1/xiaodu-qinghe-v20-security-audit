@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest android:sharedUserId="android.uid.system" android:versionCode="31" android:versionName="12" android:compileSdkVersion="31" android:compileSdkVersionCodename="12" coreApp="true" package="com.sprd.srmi" platformBuildVersionCode="31" platformBuildVersionName="12"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:name="SrmiApp" android:persistent="true" android:allowBackup="false" android:extractNativeLibs="false" android:directBootAware="true" android:usesNonSdkApi="true">
+        <service android:name="SrmiManager" android:exported="true">
+            <intent-filter>
+                <action android:name="com.sprd.srmi.ISrmiService" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

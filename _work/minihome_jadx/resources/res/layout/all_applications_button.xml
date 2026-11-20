@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:id="@+id/show_all_apps"
+    android:background="@drawable/all_applications_button_background"
+    android:focusable="true"
+    android:clickable="true"
+    android:layout_width="78dp"
+    android:layout_height="65dp">
+    <CheckBox
+        android:textSize="12dp"
+        android:textColor="@color/bright_text_dark_focused"
+        android:gravity="center_horizontal"
+        android:id="@+id/show_all_apps_check"
+        android:background="@drawable/all_applications_background"
+        android:focusable="false"
+        android:clickable="false"
+        android:duplicateParentState="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:button="@drawable/all_applications"
+        android:text="@string/show_all_apps"
+        android:maxLines="1"/>
+</LinearLayout>

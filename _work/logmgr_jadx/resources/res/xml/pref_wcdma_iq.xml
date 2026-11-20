@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:title="WIQ switch"
+        android:key="wiq_switch"
+        android:summaryOn="Enable"
+        android:summaryOff="Disable"/>
+    <ListPreference
+        android:entries="@array/function_item_entries"
+        android:title="Function Item"
+        android:key="function_item"
+        android:defaultValue="0"
+        android:entryValues="@array/function_item_values"/>
+    <ListPreference
+        android:enabled="false"
+        android:entries="@array/iq_sample_pos_entries"
+        android:title="IQ sample pos"
+        android:key="iq_sample_pos"
+        android:defaultValue="0"
+        android:entryValues="@array/iq_sample_pos_values"/>
+</PreferenceScreen>

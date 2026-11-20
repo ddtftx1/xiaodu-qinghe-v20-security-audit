@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:title="@string/c2k_iq_switch"
+        android:key="c2kiq_switch"
+        android:summaryOn="Enable"
+        android:summaryOff="Disable"/>
+    <ListPreference
+        android:entries="@array/c2k_function_item_entries"
+        android:title="Function Item"
+        android:key="function_item"
+        android:defaultValue="0"
+        android:entryValues="@array/function_item_values"/>
+    <ListPreference
+        android:entries="@array/c2kiq_sample_pos_entries"
+        android:title="IQ sample pos"
+        android:key="iq_sample_pos"
+        android:defaultValue="0"
+        android:entryValues="@array/iq_sample_pos_values"/>
+</PreferenceScreen>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="31"
+    android:versionName="12"
+    android:compileSdkVersion="31"
+    android:compileSdkVersionCodename="12"
+    package="com.unisoc.silent.reboot"
+    platformBuildVersionCode="31"
+    platformBuildVersionName="12">
+    <original-package android:name="com.unisoc.silent.reboot"/>
+    <uses-sdk
+        android:minSdkVersion="31"
+        android:targetSdkVersion="31"/>
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.REBOOT"/>
+    <uses-permission android:name="android.permission.RECOVERY"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
+    <application
+        android:label="ROR"
+        android:launchMode="singleTop"
+        android:allowBackup="false"
+        android:extractNativeLibs="true"
+        android:usesNonSdkApi="true"
+        android:requestLegacyExternalStorage="true">
+        <service
+            android:name="com.unisoc.silent.reboot.UniSilentRebootService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:protectionLevel="signature"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.unisoc.silent.reboot.start_job_service"/>
+            </intent-filter>
+        </service>
+        <receiver
+            android:name="com.unisoc.silent.reboot.UniSilentRebootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

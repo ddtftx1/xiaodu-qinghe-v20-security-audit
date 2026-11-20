@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="c2k_function_item_entries">
+        <item>item0(Default not capture)</item>
+        <item>item1(Capture IQ)</item>
+        <item>item2(Reserve)</item>
+        <item>item3(Reserve)</item>
+    </array>
+    <array name="c2kiq_sample_pos_entries">
+        <item>pos0(Captrue RX0)</item>
+        <item>pos1(Captrue RX1)</item>
+        <item>pos2(Captrue TX)</item>
+        <item>pos3</item>
+        <item>pos4</item>
+        <item>pos5</item>
+        <item>pos6</item>
+        <item>pos7</item>
+        <item>pos8</item>
+        <item>pos9</item>
+        <item>pos10</item>
+        <item>pos11</item>
+        <item>pos12</item>
+        <item>pos13</item>
+        <item>pos14</item>
+        <item>pos15</item>
+    </array>
+    <array name="function_item_entries">
+        <item>item0(close)</item>
+        <item>item1(DCH IQ)</item>
+        <item>item2(Not DCH IQ)</item>
+        <item>item3(Reserve)</item>
+    </array>
+    <array name="function_item_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+    </array>
+    <array name="iq_sample_pos_entries">
+        <item>pos0</item>
+        <item>pos1</item>
+        <item>pos2</item>
+        <item>pos3</item>
+        <item>pos4</item>
+        <item>pos5</item>
+        <item>pos6</item>
+        <item>pos7</item>
+        <item>pos8</item>
+        <item>pos9</item>
+        <item>pos10</item>
+        <item>pos11</item>
+        <item>pos12</item>
+        <item>pos13</item>
+        <item>pos14</item>
+        <item>pos15</item>
+    </array>
+    <array name="iq_sample_pos_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </array>
+    <array name="list_psLogLevel">
+        <item>Level 0</item>
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
+    </array>
+    <array name="list_wcnLogLevel">
+        <item>Level 0</item>
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
+        <item>Level 4</item>
+    </array>
+    <array name="mini_dump_entries">
+        <item>External</item>
+        <item>Internal</item>
+        <item>Data</item>
+    </array>
+    <array name="physical_layer_level_titles">
+        <item>Level 0(Critical)</item>
+        <item>Level 1(Critical)</item>
+        <item>Level 2(Critical)</item>
+        <item>Level 3(Critical)</item>
+    </array>
+    <array name="physical_layer_level_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </array>
+    <array name="ps_log_level_titles">
+        <item>Level 0(Critical)</item>
+        <item>Level 1(Important)</item>
+        <item>Level 2(Normal)</item>
+        <item>Level 3(Information)</item>
+    </array>
+    <array name="ps_log_level_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </array>
+    <array name="select_logd_size_lowram_titles">
+        <item>Off</item>
+        <item>64K</item>
+        <item>256K</item>
+        <item>1M</item>
+    </array>
+    <array name="select_logd_size_lowram_values">
+        <item>32768</item>
+        <item>65536</item>
+        <item>262144</item>
+        <item>1048576</item>
+    </array>
+    <array name="template_log">
+        <item>normal</item>
+        <item>data</item>
+        <item>audio</item>
+        <item>wcn</item>
+    </array>
+    <array name="wcn_log_level_titles">
+        <item>Level 0(Error)</item>
+        <item>Level 1(Warn/Error)</item>
+        <item>Level 2(Info/Warm/Error)</item>
+        <item>Level 3(Debug/Info/Warm/Error)</item>
+        <item>Level 4(All Log)</item>
+    </array>
+    <array name="wcn_log_level_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </array>
+</resources>

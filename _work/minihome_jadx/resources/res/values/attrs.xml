@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="marginBottom" format="dimension">
+    </attr>
+    <attr name="marginLeft" format="dimension">
+    </attr>
+    <attr name="marginRight" format="dimension">
+    </attr>
+    <attr name="marginTop" format="dimension">
+    </attr>
+    <attr name="stackOrientation">
+        <enum name="horizontal" value="0" />
+        <enum name="vertical" value="1" />
+    </attr>
+</resources>

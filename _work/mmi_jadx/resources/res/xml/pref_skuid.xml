@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="CountryCode/WallpaperedId Settings">
+    <ListPreference
+        android:entries="@array/skuid_entries"
+        android:title="Countrycode settings"
+        android:key="country_code"
+        android:defaultValue="0"
+        android:entryValues="@array/skuid_values"/>
+    <ListPreference
+        android:entries="@array/wallpaperid_entries"
+        android:title="WallpaperedId settings"
+        android:key="wallpaper_id"
+        android:defaultValue="0"
+        android:entryValues="@array/wallpaperid_values"/>
+</PreferenceScreen>

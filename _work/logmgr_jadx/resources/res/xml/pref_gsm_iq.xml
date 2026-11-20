@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="GSM IQ">
+    <SwitchPreference
+        android:title="Audio IQ"
+        android:key="audio_iq"
+        android:defaultValue="false"/>
+    <SwitchPreference
+        android:title="Communicate IQ"
+        android:key="communicate_iq"
+        android:defaultValue="false"/>
+</PreferenceScreen>

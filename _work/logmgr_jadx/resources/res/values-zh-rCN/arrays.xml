@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="function_item_entries">
+        <item>item0(默认不抓)</item>
+        <item>item1(抓DCH下的IQ)</item>
+        <item>item2(抓非DCH下的IQ)</item>
+        <item>item3(预留选项)</item>
+    </array>
+    <array name="mini_dump_entries">
+        <item>外部存储</item>
+        <item>内部存储</item>
+        <item>Data</item>
+    </array>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="config_unisoc_silent_reboot_duration">19800</integer>
+    <integer name="config_unisoc_silent_reboot_increment">1800</integer>
+    <integer name="config_unisoc_silent_reboot_period">3</integer>
+    <integer name="config_unisoc_silent_reboot_start">0</integer>
+</resources>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="1"
+    android:versionName="2.0"
+    android:targetSdkVersion="31"
+    android:compileSdkVersion="31"
+    android:compileSdkVersionCodename="12"
+    package="com.sprd.logmanager"
+    platformBuildVersionCode="31"
+    platformBuildVersionName="12">
+    <uses-sdk
+        android:minSdkVersion="31"
+        android:targetSdkVersion="31"/>
+    <protected-broadcast android:name="com.sprd.engineermode.MODEM_ASSERT_DUMP"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.REBOOT"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <application
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:name="com.sprd.logmanager.LogManagerApplication"
+        android:allowBackup="false"
+        android:extractNativeLibs="false"
+        android:resizeableActivity="false"
+        android:appComponentFactory="logmanager">
+        <activity
+            android:label="@string/app_name"
+            android:name="com.sprd.logmanager.logui.LogMainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/AppCompat"
+            android:label="userdefined"
+            android:name="com.sprd.logmanager.logui.UserDefinedActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="@string/menu_scene"
+            android:name="com.sprd.logmanager.logui.SceneSettingActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:label="@string/menu_debug"
+            android:name="com.sprd.logmanager.logui.DebugSettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:theme="@style/AppCompat"
+            android:label="@string/app_name"
+            android:name="com.sprd.logmanager.logui.LogSettingItemListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:theme="@style/AppCompat"
+            android:label="@string/app_name"
+            android:name="com.sprd.logmanager.logui.LogSettingDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="WCDMA IQ"
+            android:name="com.sprd.logmanager.logui.WCDMAIQActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="GSM IQ"
+            android:name="com.sprd.logmanager.logui.GSMIQActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="C2K IQ"
+            android:name="com.sprd.logmanager.logui.C2KIQActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="AP Log"
+            android:name="com.sprd.logmanager.logui.ApLogSwitchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="Connectivity Log"
+            android:name="com.sprd.logmanager.logui.ConnectivityLogSwitchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="@string/memu_custom"
+            android:name="com.sprd.logmanager.logui.CustomLogSwitchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="@string/menu_setting"
+            android:name="com.sprd.logmanager.logui.LogSettingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="Modem Log"
+            android:name="com.sprd.logmanager.logui.ModemLogSwitchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="Other Log"
+            android:name="com.sprd.logmanager.logui.OtherLogSwitchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <receiver
+            android:name="com.sprd.logmanager.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <activity
+            android:theme="@style/EngAppActivityTheme"
+            android:label="@string/modem_log_scene"
+            android:name="com.sprd.logmanager.logui.ModemLogSceneActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <receiver
+            android:name="com.sprd.logmanager.LogManagerReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.slogmodem.ModemDumpEnd"/>
+            </intent-filter>
+        </receiver>
+        <activity
+            android:theme="@style/DeleteTheme"
+            android:label="@string/alert_clear_title"
+            android:name="com.sprd.logmanager.logui.DeleteLogsActivity"
+            android:screenOrientation="portrait"/>
+    </application>
+</manifest>

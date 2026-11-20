@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/user_define"
+        android:orderInCategory="0"
+        android:title="@string/memu_custom"/>
+    <item
+        android:id="@+id/ylog_scene"
+        android:orderInCategory="1"
+        android:title="@string/menu_scene"/>
+    <item
+        android:id="@+id/ylog_settings"
+        android:orderInCategory="2"
+        android:title="@string/menu_setting"/>
+    <item
+        android:id="@+id/debug"
+        android:orderInCategory="3"
+        android:title="@string/menu_debug"/>
+    <item
+        android:id="@+id/restore_default"
+        android:orderInCategory="4"
+        android:title="@string/menu_restore"/>
+    <item
+        android:id="@+id/clear"
+        android:orderInCategory="5"
+        android:title="@string/menu_clear"/>
+    <item
+        android:id="@+id/ylog_copy"
+        android:orderInCategory="6"
+        android:title="@string/menu_copy"/>
+    <item
+        android:id="@+id/ylog_help"
+        android:orderInCategory="7"
+        android:title="@string/menu_help"/>
+</menu>

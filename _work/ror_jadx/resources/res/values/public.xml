@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public type="integer" name="config_unisoc_silent_reboot_duration" id="0x7f010000" />
+    <public type="integer" name="config_unisoc_silent_reboot_increment" id="0x7f010001" />
+    <public type="integer" name="config_unisoc_silent_reboot_period" id="0x7f010002" />
+    <public type="integer" name="config_unisoc_silent_reboot_start" id="0x7f010003" />
+</resources>

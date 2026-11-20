@@ -1,0 +1,262 @@
+[
+ {
+  "apk": "/product/app/webview/webview.apk",
+  "name": "org.chromium.android_webview.nonembedded.LicenseContentProvider",
+  "auth": "com.android.webview.LicenseContentProvider"
+ },
+ {
+  "apk": "/product/app/webview/webview.apk",
+  "name": "org.chromium.android_webview.services.DeveloperModeContentProvider",
+  "auth": "com.android.webview.DeveloperModeContentProvider"
+ },
+ {
+  "apk": "/system/app/Bluetooth/Bluetooth.apk",
+  "name": "com.android.bluetooth.opp.BluetoothOppProvider",
+  "auth": "com.android.bluetooth.opp"
+ },
+ {
+  "apk": "/system/app/Bluetooth/Bluetooth.apk",
+  "name": "com.android.bluetooth.avrcpcontroller.AvrcpCoverArtProvider",
+  "auth": "com.android.bluetooth.avrcpcontroller.AvrcpCoverArtProvider"
+ },
+ {
+  "apk": "/system/app/BookmarkProvider/BookmarkProvider.apk",
+  "name": ".BookmarkProvider",
+  "auth": "com.android.browser;browser"
+ },
+ {
+  "apk": "/system/app/DuerShowLauncher/DuerShowLauncher.apk",
+  "name": "com.baidu.duer.settings.base.provider.CastContentProvider",
+  "auth": "com.baidu.duershow.cast.provider"
+ },
+ {
+  "apk": "/system/app/DuerShowLauncher/DuerShowLauncher.apk",
+  "name": "com.baidu.duer.setting.globalsetting.GlobalSettingContentProvider",
+  "auth": "com.baidu.duershow.globalsetting"
+ },
+ {
+  "apk": "/system/app/DuerShowLauncher/DuerShowLauncher.apk",
+  "name": "com.xiaoyu.communication.provider.CallStateProvider",
+  "auth": "com.xiaoyu.communication.provider.callstateprovider"
+ },
+ {
+  "apk": "/system/app/DuerShowLauncher/DuerShowLauncher.apk",
+  "name": "com.xiaoyu.db.provider.DatabaseContentProvider",
+  "auth": "com.xiaoyu.db.provider.DatabaseContentProvider"
+ },
+ {
+  "apk": "/system/app/GoodFather_DuerPhone/GoodFather_DuerPhone.apk",
+  "name": "cn.jpush.android.service.DownloadProvider",
+  "auth": "com.goodfather.textbook.pad.DownloadProvider"
+ },
+ {
+  "apk": "/system/app/ReadBoy_AICourse/ReadBoy_AICourse.apk",
+  "name": "com.readboy.newcollection.data.ErrorContentProvider",
+  "auth": "com.error.questionprovider"
+ },
+ {
+  "apk": "/system/app/ReadBoy_AICourse/ReadBoy_AICourse.apk",
+  "name": "com.readboy.newcollection.data.SPContentProvider",
+  "auth": "com.spdata.questionprovider"
+ },
+ {
+  "apk": "/system/app/ReadBoy_AICourse/ReadBoy_AICourse.apk",
+  "name": "com.readboy.newcollection.newui.data.CollectionDataProvider",
+  "auth": "com.readboy.collectionProvider"
+ },
+ {
+  "apk": "/system/app/ReadBoy_AICourse/ReadBoy_AICourse.apk",
+  "name": "com.readboy.printer.PrinterProvider",
+  "auth": "com.readboy.printer.printerprovider"
+ },
+ {
+  "apk": "/system/app/appstore_xiaodu/appstore_xiaodu.apk",
+  "name": "com.baidu.duer.common.provider.AppStoreProvider",
+  "auth": "com.baidu.duer.appstore.provider.AppStoreProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_bdc_xiaodu/kdxxj_bdc_xiaodu.apk",
+  "name": "com.jxw.qkjyk.provider.PlanDetailProvider",
+  "auth": "com.jxw.gpmemorycard.MyUriMatcher"
+ },
+ {
+  "apk": "/system/app/kdxxj_bdc_xiaodu/kdxxj_bdc_xiaodu.apk",
+  "name": "com.jxw.qkjyk.provider.UploadPlanProvider",
+  "auth": "com.jxw.gpmemorycard"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.download.provider.FixDataProvider",
+  "auth": "com.jxw.download.provider.FixDataProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.download.provider.RjsAuthProvider",
+  "auth": "com.jxw.download.provider.RjsAuthProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.download.provider.CurBookProvider",
+  "auth": "com.jxw.download.provider.CurBookProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.kqcc.provider.KqccDataProvider",
+  "auth": "com.jxw.kqcc.provider.KqccDataProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.isbn.provider.IsbnProvider",
+  "auth": "com.jxw.isbn.provider.IsbnProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.zbjc.provider.SelectZbjcBookProvider",
+  "auth": "com.jxw.zbjc.provider.SelectZbjcBookProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.download.provider.BookProgressProvider",
+  "auth": "com.jxw.download.provider.BookProgressProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.download.provider.StorageTypeProvider",
+  "auth": "com.jxw.download.provider.StorageTypeProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk",
+  "name": "com.jxw.download.provider.DownloadProvider",
+  "auth": "com.jxw.download.provider.DownloadProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_jpkc_xiaodu/kdxxj_jpkc_xiaodu.apk",
+  "name": "com.jxw.jpkc.provider.AppProvider",
+  "auth": "com.jxw.jpkc.provider.AppProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_music_xiaodu/kdxxj_music_xiaodu.apk",
+  "name": "com.jxw.kdxxj.music.app.provider.MusicDbProvider",
+  "auth": "com.jxw.kdxxj.music.app.provider.MusicDbProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_register_launcher_xiaodu/kdxxj_register_launcher_xiaodu.apk",
+  "name": "com.jxw.launcher.provider.RecordProvider",
+  "auth": "com.jxw.launcher.util.provider2"
+ },
+ {
+  "apk": "/system/app/kdxxj_register_launcher_xiaodu/kdxxj_register_launcher_xiaodu.apk",
+  "name": "com.jxw.launcher.provider_kdxxj.DataProvider",
+  "auth": "com.jxw.launcher.provider.DataProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_register_launcher_xiaodu/kdxxj_register_launcher_xiaodu.apk",
+  "name": "com.jxw.launcher.provider_kdxxj.VersionProvider",
+  "auth": "com.jxw.launcher.provider.VersionProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_tbxbg_xiaodu/kdxxj_tbxbg_xiaodu.apk",
+  "name": "com.jxw.tbxbg.StudyDetailsProvider",
+  "auth": "com.jxw.tbxbg.StudyDetailsProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_tbxbg_xiaodu/kdxxj_tbxbg_xiaodu.apk",
+  "name": "com.jxw.kdxxjxueqing.LearningRecordProvider",
+  "auth": "com.jxw.kdxxjxueqing.LearningRecordProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_tbxbg_xiaodu/kdxxj_tbxbg_xiaodu.apk",
+  "name": "com.jxw.kdxxjxueqing.StudyDetailsProvider",
+  "auth": "com.jxw.kdxxjxueqing.StudyDetailsProvider"
+ },
+ {
+  "apk": "/system/app/kdxxj_tiku_xiaodu/kdxxj_tiku_xiaodu.apk",
+  "name": "com.jxw.question.app.provider.ReportProvider",
+  "auth": "com.jxw.question.report.provider"
+ },
+ {
+  "apk": "/system/app/kdxxj_tiku_xiaodu/kdxxj_tiku_xiaodu.apk",
+  "name": "com.jxw.question.app.provider.LastSelectProvider",
+  "auth": "com.jxw.question.LastSelectProvider"
+ },
+ {
+  "apk": "/system/priv-app/BlockedNumberProvider/BlockedNumberProvider.apk",
+  "name": "BlockedNumberProvider",
+  "auth": "com.android.blockednumber"
+ },
+ {
+  "apk": "/system/priv-app/DownloadProvider/DownloadProvider.apk",
+  "name": ".DownloadProvider",
+  "auth": "downloads"
+ },
+ {
+  "apk": "/system/priv-app/DuerShowOTA/DuerShowOTA.apk",
+  "name": "com.baidu.duer.ota.ThirdAppContentProvider",
+  "auth": "com.baidu.duershow.thirdApp.provider"
+ },
+ {
+  "apk": "/system/priv-app/PackageInstaller/PackageInstaller.apk",
+  "name": "com.android.packageinstaller.wear.WearPackageIconProvider",
+  "auth": "com.google.android.packageinstaller.wear.provider"
+ },
+ {
+  "apk": "/system/priv-app/SettingsProvider/SettingsProvider.apk",
+  "name": "com.android.providers.settings.SettingsProvider",
+  "auth": "settings"
+ },
+ {
+  "apk": "/system/priv-app/TelephonyProvider/TelephonyProvider.apk",
+  "name": "TelephonyProvider",
+  "auth": "telephony"
+ },
+ {
+  "apk": "/system/priv-app/TelephonyProvider/TelephonyProvider.apk",
+  "name": "CarrierIdProvider",
+  "auth": "carrier_id"
+ },
+ {
+  "apk": "/system/priv-app/UserDictionaryProvider/UserDictionaryProvider.apk",
+  "name": "UserDictionaryProvider",
+  "auth": "user_dictionary"
+ },
+ {
+  "apk": "/system_ext/app/USCPhotosProvider/USCPhotosProvider.apk",
+  "name": "com.sprd.providers.photos.SpecialTypesProvider",
+  "auth": "com.sprd.android.providers.SpecialTypesProvider"
+ },
+ {
+  "apk": "/system_ext/priv-app/Launcher3QuickStep/Launcher3QuickStep.apk",
+  "name": "com.android.launcher3.graphics.GridCustomizationsProvider",
+  "auth": "com.android.launcher3.grid_control"
+ },
+ {
+  "apk": "/system_ext/priv-app/Settings/Settings.apk",
+  "name": "com.android.settings.dashboard.suggestions.SuggestionStateProvider",
+  "auth": "com.android.settings.suggestions.status"
+ },
+ {
+  "apk": "/system_ext/priv-app/Settings/Settings.apk",
+  "name": "com.android.settings.slices.SettingsSliceProvider",
+  "auth": "com.android.settings.slices;android.settings.slices"
+ },
+ {
+  "apk": "/system_ext/priv-app/SprdContactsProvider/SprdContactsProvider.apk",
+  "name": "com.android.providers.contacts.VoicemailContentProvider",
+  "auth": "com.android.voicemail"
+ },
+ {
+  "apk": "/system_ext/priv-app/SprdContactsProvider/SprdContactsProvider.apk",
+  "name": "com.android.providers.contacts.ContactMetadataProvider",
+  "auth": "com.android.contacts.metadata"
+ },
+ {
+  "apk": "/system_ext/priv-app/SprdContactsProvider/SprdContactsProvider.apk",
+  "name": "com.android.providers.contacts.debug.DumpFileProvider",
+  "auth": "com.android.contacts.dumpfile"
+ },
+ {
+  "apk": "/system_ext/priv-app/SystemUI/SystemUI.apk",
+  "name": "com.android.systemui.keyguard.KeyguardSliceProvider",
+  "auth": "com.android.systemui.keyguard"
+ }
+]

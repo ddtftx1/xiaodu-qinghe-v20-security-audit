@@ -1,0 +1,30 @@
+# 编译产物
+out/
+*.apk
+*.apk.idsig
+*.dex
+*.class
+*.jar
+
+# 签名材料（绝对不要提交）
+*.keystore
+*.jks
+*.p12
+poc.keystore
+
+# 编辑器/系统
+.idea/
+.gradle/
+*.iml
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.log
+before.txt
+before_settings.txt
+srcs.txt
+
+# 敏感：不含真实目标 IP / 序列号
+*.local
+secrets/

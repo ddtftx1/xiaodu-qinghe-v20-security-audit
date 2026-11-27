@@ -1,0 +1,25 @@
+===== 0. 身份（普通应用，无 adb）=====
+uid=10159(u0_a159) gid=10159(u0_a159) groups=10159(u0_a159),1079(ext_obb_rw),3003(inet),9997(everybody),20159(u0_a159_cache),50159(all_a159) context=u:r:untrusted_app_27:s0:c159,c256,c512,c768
+
+===== 1. Settings WifiAPITestActivity =====
+Starting: Intent { cmp=com.android.settings/.Settings$WifiAPITestActivity }
+
+===== 2. Settings.wifi.WifiStatusTest =====
+Starting: Intent { cmp=com.android.settings/.wifi.WifiStatusTest }
+
+===== 3. SystemUI DemoMode (alias -> TunerActivity) =====
+Starting: Intent { cmp=com.android.systemui/.DemoMode }
+
+===== 4. PackageInstaller UninstallerActivity =====
+Starting: Intent { cmp=com.android.packageinstaller/.UninstallerActivity }
+
+===== 5. contacts.debug 组件归属 =====
+-- com.android.providers.contacts --
+-- com.android.contacts --
+
+===== 6. 当前前台 Activity =====
+
+===== 7. 对照组：V01 FactoryReset（仅测能否拉起，不点确认）=====
+Starting: Intent { cmp=com.sprd.validationtools/.instructions.FactoryReset }
+
+===== DONE =====

@@ -1,5 +1,99 @@
 # Changelog
 
+## [1.3.0] - 2026-11-27（全量重审：修正旧基线 + 新增 4 条漏报）
+
+> 独立于 `audit.json`，从 130 个 APK 的**原始清单重新解析**（`_work/rea_scan.py`），
+> 核对 19 条漏洞的误报与漏报。
+> 复核身份：UID 10159 普通应用，**无 adb、无 root**。
+
+### 旧基线的三个错误（已修正）
+
+| # | 错误 | 影响 |
+|---|---|---|
+| 1 | **`com.android.wallpaperbackup` 是虚构条目** —— APK 在本机不存在（`pm path` 无输出） | 「21 个 system UID 包」→ **20** |
+| 2 | **49 个 `activity-alias` 被错标为 `activity`** —— 旧数据缺 `targetActivity`，alias 的 exported/permission 独立于目标 | 这 49 条的可达性判断整体失真，且直接导致 V24 被漏报 |
+| 3 | `com.readboy.aicourseopen` 空 name（上轮已判定为解析残缺） | 无影响 |
+
+组件基线（新旧对照）：
+
+```
+           旧(v1.2)   新(v1.3)   差异
+组件        3204       3203      -1
+导出        2262       2261      -1
+system UID  21         20        -1
+```
+
+> 注：`exported="true"` 仍是 **1081**，未变。差异全在
+> `exported="def"`（1181 → 1180）与 system UID 包数。
+
+### 新增漏洞（4 条，全部静态确认）
+
+| ID | 名称 | 包 | 严重性 |
+|---|---|---|---|
+| **V22** | 联系人数据库导出接口开放（`ContactsDumpActivity` + `DumpFileProvider`，均 exported=true 零权限） | `com.android.providers.contacts` | **高** |
+| **V23** | WiFi 测试接口开放（`Settings$WifiAPITestActivity` + `WifiStatusTest`，system UID 下的权限借用） | `com.android.settings` | **中** |
+| **V24** | SystemUI Tuner 可被任意应用拉起（`DemoMode` alias → `TunerActivity`，alias 无权限） | `com.android.systemui` | **中** |
+| **V25** | 卸载确认界面可被拉起（配合 V03 成社工链） | `com.android.packageinstaller` | 低 |
+
+**全部未实机验证** —— 见下「验证局限」。
+
+### 19 条已有漏洞复核结论
+
+**无一条需要撤销。** 两处需加强表述：
+
+- **V08**：manifest 确认除 `exported=true` 外还有 **`intent-filter android:priority="1000"`**
+  与 **`directBootAware="true"`** —— 能在开机锁屏前（Direct Boot）抢在其他接收者之前执行，
+  比原描述**更严重**。
+- **V01**：`FactoryReset` 带自定义 action `com.sprocomm.mmi.FactoryReset` 的 intent-filter，
+  除显式 `-n` 外还能通过**隐式 action 匹配**拉起，可达性更宽。
+
+### 待定（不单列）
+
+- `managedprovisioning.ota.PreBootListener`：`exported=true` 但监听的是
+  **protected broadcast**（`PRE_BOOT_COMPLETED`），第三方发不出 → 不构成漏洞
+- `telecom.AppUninstallBroadcastReceiver`：同上（`PACKAGE_FULLY_REMOVED` 受保护）
+- `com.baidu.launcher`：**21 个**「所有类型+零权限」导出组件（旧记录「5 个」是只数 provider 的口径）
+  非 system UID，影响面有限，未单列
+
+### 验证局限（必须声明）
+
+V22–V25 **全部为静态确认**，不是「已实机验证」。原因：
+
+```
+$ am start -W -n ...WifiAPITestActivity
+Starting: Intent { ... }      ← 只回显，无 Status
+$ dumpsys activity activities
+（无输出）
+$ logcat -d
+（无输出）
+```
+
+UID 10159 下 `dumpsys activity` / `logcat` 被 `android.permission.DUMP` /
+`READ_LOGS` 拒绝，SELinux 域 `untrusted_app_27` 也不允许。
+本轮**没有 adb**：应用崩溃后 MCP `termux` 包失效，改用
+`super_admin:terminal` 的 Ubuntu 环境，该环境无 adb 二进制。
+
+### 新增文件
+
+| 文件 | 内容 |
+|---|---|
+| `_work/rea_scan.py` | 从 APK 原始清单重解析（不依赖 audit.json） |
+| `_work/rea_probe*.sh` | 5 个可达性探针脚本（全部只读） |
+| `analysis/rea_components.tsv` | 3203 组件，**含 `activity-alias` 与 `targetActivity`** |
+| `analysis/rea_perm_decls.tsv` | 93 条 `<permission>` 声明及 protectionLevel |
+| `analysis/rea_uses_perm.tsv` | 2330 条 `<uses-permission>` |
+| `analysis/rea_probe*.txt` | 探针原始输出（manifest 片段 + 尝试结果） |
+| `docs/REA-1.3-全量重审报告.md` | 完整报告 |
+
+### 联动修改
+
+- `README.md`：组件基线三数、漏洞总数 19→**23**、根因 12→**15**、
+  索引表补 V22–V25、launcher 口径说明
+- `HANDOFF.md`：版本 v1.2.0→**v1.3.0**、编号规则（V09/V21 不复用，
+  新条目从 **V26** 起）、launcher 口径
+
+---
+
 ## [1.2.0] - 2026-11-27（root 链可行性复核 + 勘误）
 
 > 本轮不改漏洞条目数量（仍 19 条），做三件事：

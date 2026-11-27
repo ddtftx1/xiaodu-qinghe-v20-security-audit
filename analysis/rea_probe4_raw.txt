@@ -1,0 +1,18 @@
+### com.android.settings/com.android.settings.Settings$WifiAPITestActivity
+Starting: Intent { cmp=com.android.settings/.Settings$WifiAPITestActivity }
+
+### com.android.settings/com.android.settings.wifi.WifiStatusTest
+Starting: Intent { cmp=com.android.settings/.wifi.WifiStatusTest }
+
+### com.android.systemui/com.android.systemui.DemoMode
+
+### com.android.packageinstaller/com.android.packageinstaller.UninstallerActivity
+Starting: Intent { cmp=com.android.packageinstaller/.UninstallerActivity }
+
+### com.sprd.validationtools/com.sprd.validationtools.instructions.FactoryReset
+
+### contacts.debug 组件归属（从 rea_components.tsv）
+com.android.providers.contacts	activity	com.android.providers.contacts.debug.ContactsDumpActivity	true
+com.android.providers.contacts	provider	com.android.providers.contacts.debug.DumpFileProvider	true
+
+### logcat 权限拒绝（最近 300 行）

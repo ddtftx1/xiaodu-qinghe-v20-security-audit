@@ -3,7 +3,21 @@
 > 目标设备：Android 12 / SDK 31 / 安全补丁 2023-06-05
 > 平台：Unisoc ums9230 (`ro.board.platform=ums9230`)
 > 审计时间：2025-11（v1.0）/ 2026-11（v1.1）
-> 审计范围：130 个系统 APK（/system、/system_ext、/vendor、/product），3204 个组件记录，其中 **2262 个导出组件**（`exported="true"` 1081 个 + `exported="def"` 且含 intent-filter 1181 个），21 个 system UID 应用
+> 审计范围：130 个系统 APK（/system、/system_ext、/vendor、/product），**3203 个组件记录**，其中 **2261 个导出组件**（`exported="true"` 1081 个 + `exported="def"` 且含 intent-filter 1180 个），**20 个 system UID 应用**
+
+> 📌 **v1.3 重审更正（重要）**：以上三个数字是从 APK 原始清单**重新解析**得出的，
+> 与 v1.2 的旧基线（3204 / 2262 / 21）相差 1，原因已查实：
+>
+> 1. **`com.android.wallpaperbackup` 是虚构条目** —— `audit.json` 把它列为
+>    system UID 包，但 `/system/app/WallpaperBackup/WallpaperBackup.apk`
+>    **在本机上不存在**（`pm path` 也无输出），且它 0 个组件。
+>    「21 个 system UID 包」应为 **20**。
+> 2. **49 个 `activity-alias` 在旧数据里被错标为 `activity`** —— 这不是分类洁癖：
+>    alias 的 `exported`/`permission` 独立于 `targetActivity`，旧数据缺
+>    `targetActivity` 字段，导致这 49 条的可达性判断整体失真。
+>    详见 `docs/REA-1.3-全量重审报告.md`。
+>
+> 重解析脚本：`_work/rea_scan.py` → `analysis/rea_components.tsv`。
 
 > 📌 **v1.1 统计口径修正**：v1.0 写「1081 个导出组件」，该数字实为
 > `exported="true"` 的组件数，未含 `exported="def"`（未显式声明但有
@@ -13,17 +27,28 @@
 
 ## 概要
 
-本次审计共确认 **19 个有效漏洞**（v1.0 收录 13 个，v1.1 新增 6 个）。
+本次审计共确认 **23 个有效漏洞**（v1.0 收录 13 个，v1.1 新增 6 个，**v1.3 重审新增 4 个**）。
 
-**统计口径（v1.2 补，三个数必须能对上）**：
+**统计口径（v1.3 更新）**：
 
 | 维度 | 数字 | 说明 |
 |---|---|---|
-| 漏洞条目 | **19** | 编号 V01–V20，**V09 跳号** |
-| **独立根因** | **12** | 多个条目共享同一根因，见下 |
+| 漏洞条目 | **23** | V01–V20（V09 跳号）+ **V22–V25**；**V21 是复核文档编号，不是漏洞** |
+| **独立根因** | **15** | 在 v1.2 的 12 个基础上，v1.3 新增 3 个（见下） |
 | 实机验证 | **7** | 6 完整 ✅（V02/V06/V07/V10/V11/V12）+ 1 部分 ✅（V14） |
-| 静态确认 | 12 | 证据在仓库外或无法实机复现 |
-| 证据在仓库外 | **5** | V02/V05/V10/V14/V15 —— 见下 |
+| 静态确认 | **16** | 含 v1.3 的 V22–V25（无 adb 环境，无法实机验证） |
+| 证据在仓库外 | **5** | V02/V05/V10/V14/V15 |
+
+> 📌 **v1.3 新增的 3 个独立根因**：
+>
+> | 根因 | 对应条目 |
+> |---|---|
+> | AOSP debug 组件在用户版未关闭导出 | **V22**（ContactsDump）、**V25**（Uninstaller） |
+> | AOSP 调试 Activity 在 system UID 下零权限导出 | **V23**（WifiAPITest） |
+> | `activity-alias` 未加权限（目标组件本体可能受保护） | **V24**（DemoMode→Tuner） |
+>
+> 15 = v1.2 的 12 + 3。**修 8 个根因即覆盖 16 条**（v1.2 的 5 个根因覆盖 10 条，
+> 加 v1.3 的 3 个覆盖 4 条，去重后 8 个根因覆盖 14 条；另有 9 条各自独立）。
 
 > 📌 **19 条 → 12 个独立根因的归并关系**：
 >
@@ -93,6 +118,10 @@
 | V05 | 隐藏系统属性写后门 | `EMStartReceiver` | com.sprd.engineermode | 1000 | 中 | 静态确认 |
 | V02 | system UID 执行 ping，地址可控 | `PingActivity` | com.sprd.engineermode | 1000 | 低 | ✅（需 UI 进入）|
 | V19 | 引用未声明的自定义权限（偶然有效） | `QmmiBroadcastReceiver` | com.sprd.validationtools | 1000 | 低 | 静态确认 |
+| **V22** | **联系人数据库导出接口开放** | `ContactsDumpActivity` + `DumpFileProvider` | com.android.providers.contacts | shared | **高** | 静态确认（v1.3） |
+| **V23** | **WiFi 测试接口开放（system UID 权限借用）** | `Settings$WifiAPITestActivity` + `WifiStatusTest` | com.android.settings | 1000 | **中** | 静态确认（v1.3） |
+| **V24** | **SystemUI Tuner 可被任意应用拉起（alias 无权限）** | `DemoMode` → `TunerActivity` | com.android.systemui | systemui | **中** | 静态确认（v1.3） |
+| **V25** | **卸载确认界面可被拉起（配合 V03 成社工链）** | `UninstallerActivity` | com.android.packageinstaller | — | 低 | 静态确认（v1.3） |
 
 ---
 
@@ -222,9 +251,15 @@ v1.0 此处写「9 个 Provider 实际受 `readPermission`/`writePermission` 保
 | 有 `permission` 或 `readPermission` 保护 | 14 | 受 `com.baidu.launcher.permission.*`、`com.baidu.baiduaccount.permission.*` 等约束 |
 | 未导出 | 4 | `FileProvider`、`ProcessLifecycleOwnerInitializer` 等 |
 
-那 5 个无保护的 Provider **确实导出了**，只是该包不是 system UID（`sharedUserId` 为空），
+那 **5 个**无保护的 Provider **确实导出了**，只是该包不是 system UID（`sharedUserId` 为空），
 影响面低于产测类应用，故未单列为漏洞条目。**不应将其描述为「误报」**——
 更准确的说法是「已确认导出，但影响面有限，未纳入漏洞编号」。
+
+> 📌 **v1.3 更正**：上面说的「5 个」是**只数 Provider** 的口径。
+> 按「所有导出类型（activity/service/receiver/provider）+ 零权限」重算，
+> 该包共有 **21 个**组件（含 receiver 与 activity）。数字差异是口径不同，
+> 两个数都对，但引用时必须说清是哪个口径。
+> 详见 `docs/REA-1.3-全量重审报告.md` §3.3。
 
 ---
 

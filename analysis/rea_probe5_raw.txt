@@ -1,0 +1,23 @@
+### WifiAPITest
+   TOP: <无>
+   => 未确认（可能被拒或已退出）
+
+### WifiStatusTest
+   TOP: <无>
+   => 未确认（可能被拒或已退出）
+
+### DemoMode
+   TOP: <无>
+   => 未确认（可能被拒或已退出）
+
+### UninstallerActivity
+   TOP: <无>
+   => 未确认（可能被拒或已退出）
+
+### FactoryReset
+   TOP: <无>
+   => 未确认（可能被拒或已退出）
+
+### 全部 activity 栈（前 20 行）
+
+### 权限拒绝日志（全量，最近 200 条）

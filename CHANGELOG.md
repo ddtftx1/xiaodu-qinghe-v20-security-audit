@@ -64,6 +64,36 @@
 
 ---
 
+## [1.1.1] - 2026-11-27（文档补齐）
+
+### 新增文档
+
+- 补齐 V1.1 新增条目缺失的技术文档：
+  - `docs/V18-silent-reboot-surface.md`（`UniSilentRebootService/Receiver`，
+    代码取自 UniSilentReboot.apk 的 jadx 反编译；确认总开关
+    `persist.silent.reboot.enabled` 默认 true、时间窗命中即
+    `PowerManager.reboot("quiescent")`、Receiver 不校验 action）
+  - `docs/V19-undeclared-perm-receiver.md`（`QmmiBroadcastReceiver` 引用
+    全固件未声明的 `com.example.receiver.receivebroadcast`；全固件 130 个
+    APK 的 `perms` 扫描无命中；与 V07 的 Receiver2 一并整改）
+  - `docs/V20-prod-file-selinux-template.md`（`prod_file` 全权读写域清单
+    取自 vendor SELinux CIL 实扫：14 个域 full_rw=True；域→应用映射取自
+    `vendor_seapp_contexts`，`seinfo=platform` 限制了直接提权边界；
+    `prod_file` 实际落点仍未验证，维持「模板治理项、不作可利用漏洞」口径）
+
+### 新增文件
+
+- `HANDOFF.md` 项目交接书（仓库真实 git 状态 / 19 漏洞速览 / 4 项仓库质量
+  风险（含 `_work/` 5373 文件被跟踪）/ 复现工具链 / 安全红线 / 接手 Checklist）
+- `README.md` 目录结构同步更新（补 V18–V20 文档与 HANDOFF.md 条目）
+
+### 说明
+
+- 本提交不新增漏洞编号，仅补齐 v1.1 的 3 个文档 + 交接材料；
+  漏洞总数与验证状态统计不变（19 个，6 完整 ✅ + 1 部分 ✅ + 12 静态）。
+
+---
+
 ## [1.0.0] - 2025-11
 
 ### 首次发布

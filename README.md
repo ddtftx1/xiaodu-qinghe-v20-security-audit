@@ -70,17 +70,22 @@
 ```
 漏洞/
 ├── README.md                 ← 本文件（总索引）
+├── HANDOFF.md                ← 项目交接书（仓库状态/质量风险/接手 Checklist）
 ├── docs/                     ← 每个漏洞的详细技术文档
 │   ├── V01-V04-misc-exports.md
 │   ├── V02-ping-activity.md
 │   ├── ...
 │   ├── V16-phasecheck-miscdata-write.md    (v1.1)
-│   └── V17-save-phasecheck-permission.md   (v1.1)
+│   ├── V17-save-phasecheck-permission.md   (v1.1)
+│   ├── V18-silent-reboot-surface.md        (v1.1)
+│   ├── V19-undeclared-perm-receiver.md     (v1.1)
+│   └── V20-prod-file-selinux-template.md   (v1.1)
 ├── poc/                      ← 概念验证脚本
 │   ├── README.md             ← PoC 使用说明
 │   ├── poc.sh                ← 一键执行脚本（adb）
 │   ├── lib/                  ← 辅助库
 │   └── java/                 ← Java/Binder 客户端样例
+├── _work/                    ← 反编译/分析工作区（脚本、jadx 产物）
 └── analysis/                 ← 审计原始数据（JSON）
     ├── audit.json            ← 130 个 APK 的组件/权限清单
     ├── prov_unsafe.json      ← 52 个真正无权限保护的 Provider

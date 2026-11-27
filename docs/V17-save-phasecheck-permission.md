@@ -235,24 +235,58 @@ MMITools → 单项测试，观察对应 station 的结果显示；
 
 ### 6.2 纵深防御：代码层校验
 
+> ⚠️ **v1.2 勘误（E1）**：本节此前给出的 `Binder.getCallingUid()` 示例是**无效**的。
+> `BroadcastReceiver.onReceive()` 跑在应用主线程的普通消息循环里，
+> 不是 Binder 线程，调用栈上没有 Incoming Parcel 可供查询，
+> `Binder.getCallingUid()` 会直接回落到**本进程的 UID**（这里是 1000）。
+> 也就是说，这个判断对**任何调用方恒为真**，等于没有校验。
+>
+> 同理，`getSentFromUid()`（`BroadcastOptions` 里的发送方 UID）是
+> **API 34（Android 14）** 才引入的，本机是 API 31，用不了。
+>
+> 广播场景**没有**可靠的代码层调用方身份校验手段，只能靠权限。
+
+正确的做法只有一条：**`android:permission` 使用 `signature` 级自定义权限**。
+
+```xml
+<!-- 声明：显式 protectionLevel，不要省略 -->
+<permission android:name="com.sprd.validationtools.permission.SAVE_PHASECHECK"
+            android:protectionLevel="signature" />
+
+<receiver android:name="com.sprd.validationtools.PhaseCheckBroadcastReceiver"
+          android:permission="com.sprd.validationtools.permission.SAVE_PHASECHECK"
+          android:exported="true">
+    <intent-filter>
+        <action android:name="com.sprd.validationtools.SAVE_PHASECHECK" />
+    </intent-filter>
+</receiver>
+```
+
+代码侧的价值只剩「降低影响面」，**不能当作鉴权**：
+
 ```java
 @Override
 public void onReceive(Context context, Intent intent) {
-    // 1. 校验调用方 UID
-    int uid = Binder.getCallingUid();
-    if (uid != Process.SYSTEM_UID && uid != Process.SHELL_UID) {
-        Log.w(TAG, "reject caller uid " + uid);
+    // station 白名单：减少可篡改的字段范围（不是鉴权，只是收窄）
+    String station = intent.getStringExtra(SAVE_PHASECHECK_STATION_NAME);
+    if (station == null || !ALLOWED_STATIONS.contains(station)) {
+        Log.w(TAG, "reject station " + station);
         return;
     }
-    // 2. station 白名单
-    String station = intent.getStringExtra(SAVE_PHASECHECK_STATION_NAME);
-    if (!ALLOWED_STATIONS.contains(station)) {
-        Log.w(TAG, "reject station " + station);
+    // result 只允许 "0" / "1"
+    String result = intent.getStringExtra(SAVE_PHASECHECK_RESULT);
+    if (!"0".equals(result) && !"1".equals(result)) {
+        Log.w(TAG, "reject result " + result);
         return;
     }
     ...
 }
 ```
+
+> 📌 E1 与 V19 的「偶然有效」本质是同一件事的两面：
+> **广播的防护完全依赖 `android:permission` 的 `protectionLevel` 是否定到位**。
+> V17 是「权限定了但等级漏了」（默认 normal），V19 是「权限名根本不存在」。
+> 两者都说明这个固件的自定义权限治理是系统性缺失，而不是个别疏漏。
 
 ### 6.3 同批排查
 

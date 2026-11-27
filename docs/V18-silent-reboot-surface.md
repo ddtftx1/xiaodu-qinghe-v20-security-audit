@@ -14,7 +14,14 @@
 
 ## 1. 摘要
 
-`com.unisoc.silent.reboot` 是一个展锐平台自带的**静默重启（Silent OTA reboot）**
+> ⚠️ **v1.2 勘误（E5）**：本条 **不是**外部可触发的导出组件漏洞。
+> `UniSilentRebootReceiver` 的实际声明是 **`android:exported="false"`**，
+> `adb` / 第三方应用发出的广播**根本到不了它**。
+> 攻击面是「**开机后自动排程**」，不是「任意应用可拉起重启」。
+> 严重度维持「中」才站得住 —— 它成立的前提是 V05 之类能写 `persist.*` 的入口，
+> 而不是自身可达。
+
+`com.unisoc.silent.reboot` 是展锐平台自带的**静默重启（Silent OTA reboot）**
 框架：设备在预定的时间窗内无感知地重启，用于后台应用更新落地。它的行为
 完全由一组 `persist.*` 属性控制，其中总开关
 `persist.silent.reboot.enabled` **未设置时默认为 `true`**：
@@ -31,13 +38,25 @@ if (SystemProperties.getBoolean("persist.silent.reboot.enabled", true)) {
 开机广播后就会排一个 JobScheduler job（id=2001），到时间窗即
 `PowerManager.reboot("quiescent")`。
 
+### 1.0 三个入口的实际可达性（复核）
+
+| 入口 | 声明 | 谁能触发 |
+|---|---|---|
+| `UniSilentRebootReceiver` | **`exported="false"`** | 只有系统能发 `BOOT_COMPLETED` / `LOCKED_BOOT_COMPLETED`（都是 protected broadcast）；**第三方应用、`adb shell` 均不可** |
+| `UniSilentRebootService` | `exported="true"` + `permission="android.permission.BIND_JOB_SERVICE"`（`signature`） | 只有 JobScheduler（system_server）能绑定；第三方应用拿不到该权限 |
+| `persist.silent.reboot.*` 属性 | 需 system UID / root 才可 `setprop` | 普通应用不能直接写；**需要借道 V05 这类属性写后门** |
+
+> 📌 因此本条的准确定位是：**一个「默认开启 + 无人看守」的调度器，
+> 其控制面（`persist.*` 全家桶）对本机已有的属性写漏洞完全敞开。**
+> 单独看它不可利用，与 V05 组合后才是「可被外部操控的静默重启」。
+
 ### 1.1 本条为什么是「调度面」而不是「可直接触发的重启」
 
 直接触发路径全部有保护，**普通应用无法直接拉起重启**：
 
 | 入口 | 保护 | 说明 |
 |------|------|------|
-| `UniSilentRebootReceiver` | `exported=false` | 监听 `BOOT_COMPLETED` / `LOCKED_BOOT_COMPLETED`，二者均为 **protected broadcast**，普通应用发不出 |
+| `UniSilentRebootReceiver` | **`exported="false"`** | 监听 `BOOT_COMPLETED` / `LOCKED_BOOT_COMPLETED`，二者均为 **protected broadcast**，普通应用发不出；且组件本身不导出，显式 `-n` 也会被拒 |
 | `UniSilentRebootService` | `BIND_JOB_SERVICE`（signature） | 唯一合法启动方是 JobScheduler，普通应用无法绑定 |
 | 属性写入（`SystemProperties.set`）| 需 system UID / root | 普通应用无法写 `persist.*` |
 

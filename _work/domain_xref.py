@@ -1,3 +1,5 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import json
 import re
 
@@ -32,7 +34,7 @@ for line in SEAPP_RAW.strip().splitlines():
         seapp[name] = (dom, kv.get('user'), kv.get('type'))
 
 # 2) audit.json 里实际存在的包
-d = json.load(open('/sdcard/漏洞/analysis/audit.json'))
+d = json.load(open(_os.path.join(_REPO, 'analysis/audit.json')))
 bypkg = {}
 for x in d:
     bypkg[x['pkg']] = x

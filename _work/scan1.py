@@ -1,7 +1,9 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import json
 from collections import Counter
 
-d = json.load(open('/sdcard/漏洞/analysis/audit.json'))
+d = json.load(open(_os.path.join(_REPO, 'analysis/audit.json')))
 
 def is_sys(shared):
     return shared in ('android.uid.system',)

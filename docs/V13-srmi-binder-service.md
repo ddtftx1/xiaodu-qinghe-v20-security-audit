@@ -141,4 +141,53 @@ private void enforceCaller() {
 }
 ```
 
+> ✅ **v1.2 复核（E3）：这条是有效的，与 E1/E2 不同。**
+>
+> 区别在于执行上下文：`ISrmiService.Stub` 的方法体（以及 `onTransact`）
+> 运行在 **Binder 线程池**中，此时 `Binder.getCallingUid()` 读取的是
+> 当前线程上的 `IPCThreadState` 记录的调用方 UID，**能拿到真实值**。
+> 而 E1（`BroadcastReceiver.onReceive`）和 E2（`Activity.onCreate`）
+> 跑在主线程，拿到的永远是本进程 UID —— 这正是三者的分野。
+>
+> | 组件类型 | 回调线程 | `getCallingUid()` |
+> |---|---|---|
+> | `Service`（Binder Stub / `onTransact`） | Binder 线程池 | ✅ 真实调用方 |
+> | `BroadcastReceiver.onReceive` | 主线程 | ❌ 恒为本进程 |
+> | `Activity.onCreate` | 主线程 | ❌ 恒为本进程 |
+> | `ContentProvider.call/query/...` | Binder 线程池 | ✅ 真实调用方 |
+>
+> ### 关于「放行 `SHELL_UID`」——这是一个显式决策，不是顺手
+>
+> 上面的示例放行了 `Process.SHELL_UID`（2000）。这不是无心的宽松，而是明确取舍：
+>
+> - **为什么放行**：产线/售后工装工具、`adb shell` 调试、自动化测试脚本
+>   都跑在 shell UID 下，需要调用 SRMI 做射频/网络诊断。如果只放行
+>   `SYSTEM_UID`，现场工装会全部失效。
+> - **代价**：`adb shell` 能做的事，`adb` 连接者都能做。在本机的威胁模型里，
+>   adb 已经是「完全可信的本地开发通道」（且 `adb shell` 本身就持有
+>   `WRITE_SECURE_SETTINGS`，能直接触发 CVE-2024-31317），
+>   所以额外放行 shell 不引入新的信任边界。
+> - **取舍结论**：**如果这台设备面向消费者出货且关闭了 adb**，
+>   应当把 `SHELL_UID` 从白名单里去掉，只留 `SYSTEM_UID`。
+>   这句话必须写进修复说明，而不是让代码默默放行。
+>
+> 更好的形态是「白名单 UID + 强签名校验双保险」，而不是单个 UID 判断：
+>
+> ```java
+> private static final Set<Integer> ALLOWED_UIDS = new HashSet<>();
+> static {
+>     ALLOWED_UIDS.add(Process.SYSTEM_UID);      // 系统内部调用
+>     if (Build.IS_DEBUGGABLE) {
+>         ALLOWED_UIDS.add(Process.SHELL_UID);   // 仅调试构建放行
+>     }
+> }
+>
+> private void enforceCaller() {
+>     int uid = Binder.getCallingUid();
+>     if (!ALLOWED_UIDS.contains(uid)) {
+>         throw new SecurityException("SrmiManager: caller uid " + uid + " denied");
+>     }
+> }
+> ```
+
 此外建议 native 层对 `msgId / attr / value` 长度做严格校验。

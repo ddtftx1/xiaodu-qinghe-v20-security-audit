@@ -103,12 +103,13 @@ aapt dump xmltree /system/app/MMITools/MMITools.apk AndroidManifest.xml \
 # 2. 全固件确认无 APK 声明 com.example.receiver.receivebroadcast
 #    （本仓库 analysis/audit.json 的 perms 字段已扫描，无命中）
 python3 - <<'PY'
-import json
-d=json.load(open('/storage/emulated/0/漏洞/analysis/audit.json'))
+import json, os
+REPO = os.getcwd()          # 在仓库根执行
+d = json.load(open(os.path.join(REPO, 'analysis/audit.json'), encoding='utf-8'))
 for x in d:
-    for p in x.get('perms',[]) or []:
+    for p in x.get('perms', []) or []:
         if 'com.example' in p:
-            print(x['pkg'],p)
+            print(x['pkg'], p)
 print('com.example 权限声明扫描完成')
 PY
 ```

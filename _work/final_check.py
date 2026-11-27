@@ -1,7 +1,9 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import re
 import os
 
-readme = open('/sdcard/漏洞/README.md', encoding='utf-8').read()
+readme = open(_os.path.join(_REPO, 'README.md'), encoding='utf-8').read()
 
 # 1) 提取索引表中的编号
 table_ids = re.findall(r'^\|\s*(V\d{2})\s*\|', readme, re.M)
@@ -31,7 +33,7 @@ print('  部分 ✅        :', len(re.findall(r'\|\s*部分\s*✅\s*\|', readme)
 print('  静态确认        :', len(re.findall(r'\|\s*静态确认\s*\|\s*$', readme, re.M)))
 
 # 5) docs 目录完整性
-docs = sorted(os.listdir('/sdcard/漏洞/docs'))
+docs = sorted(os.listdir(_os.path.join(_REPO, 'docs')))
 print()
 print('=== docs 目录 ===')
 print('  文件数:', len(docs))

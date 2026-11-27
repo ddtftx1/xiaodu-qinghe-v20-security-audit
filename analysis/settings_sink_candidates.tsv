@@ -1,0 +1,44 @@
+apk	apk_path	pkg	shared	hits	exported_comps	exported_no_perm	verdict
+Settings.apk	/system_ext/priv-app/Settings/Settings.apk	com.android.settings	android.uid.system	ContentResolver.update,Global.put,Secure.put,System.put	314	265	CANDIDATE-A: uid1000 + 无权限导出组件 + Global.put
+DuerDeskClock.apk	/system_ext/app/DuerDeskClock/DuerDeskClock.apk	com.android.deskclock	android.uid.system	ContentResolver.update,Global.put,Secure.put,System.put	24	21	CANDIDATE-A: uid1000 + 无权限导出组件 + Global.put
+MMITools.apk	/system/app/MMITools/MMITools.apk	com.sprd.validationtools	android.uid.system	ContentResolver.update,Global.put,Secure.put,System.put	21	19	CANDIDATE-A: uid1000 + 无权限导出组件 + Global.put
+Telecom.apk	/system/priv-app/Telecom/Telecom.apk	com.android.server.telecom	android.uid.system	ContentResolver.update,Global.put,Secure.put,System.put	14	11	CANDIDATE-A: uid1000 + 无权限导出组件 + Global.put
+EngineerMode.apk	/system_ext/app/EngineerMode/EngineerMode.apk	com.sprd.engineermode	android.uid.system	ContentResolver.update,Global.put,Secure.put,System.put	8	8	CANDIDATE-A: uid1000 + 无权限导出组件 + Global.put
+DuerShowOTA.apk	/system/priv-app/DuerShowOTA/DuerShowOTA.apk	com.baidu.duer.ota	android.uid.system	ContentResolver.update,Global.put	8	7	CANDIDATE-A: uid1000 + 无权限导出组件 + Global.put
+DuerShowStatistic.apk	/system/priv-app/DuerShowStatistic/DuerShowStatistic.apk	com.baidu.duershow.statistic	android.uid.system	ContentResolver.update,Global.put,System.put	5	1	CANDIDATE-A: uid1000 + 无权限导出组件 + Global.put
+SettingsProvider.apk	/system/priv-app/SettingsProvider/SettingsProvider.apk	com.android.providers.settings	android.uid.system	ContentResolver.update,Global.put,Secure.put,SettingsProvider.call,System.put,exemptions	2	1	CANDIDATE-A: uid1000 + 无权限导出组件 + Global.put
+DuerShowLauncher.apk	/system/app/DuerShowLauncher/DuerShowLauncher.apk	com.baidu.launcher		ContentResolver.update,Global.put,Secure.put,System.put	272	243	non-uid1000（不经 31317 路径）
+BaiduVoiceInput.apk	/system/app/BaiduVoiceInput/BaiduVoiceInput.apk	com.baidu.input		ContentResolver.update,Global.put,System.put	181	169	non-uid1000（不经 31317 路径）
+kdxxj_download_xiaodu.apk	/system/app/kdxxj_download_xiaodu/kdxxj_download_xiaodu.apk	com.jxw.download		ContentResolver.update,Global.put,Secure.put,System.put	76	76	non-uid1000（不经 31317 路径）
+NewGallery2.apk	/system_ext/app/NewGallery2/NewGallery2.apk	com.android.gallery3d		ContentResolver.update,Global.put,Secure.put,System.put	60	58	non-uid1000（不经 31317 路径）
+webview.apk	/product/app/webview/webview.apk	com.android.webview		ContentResolver.update,Global.put,Secure.put,System.put	51	50	non-uid1000（不经 31317 路径）
+DuerContacts.apk	/system_ext/priv-app/DuerContacts/DuerContacts.apk	com.android.contacts		ContentResolver.update,Global.put,System.put	42	40	non-uid1000（不经 31317 路径）
+SystemUI.apk	/system_ext/priv-app/SystemUI/SystemUI.apk	com.android.systemui	android.uid.systemui	ContentResolver.update,Global.put,Secure.put,System.put	55	36	non-uid1000（不经 31317 路径）
+SprdDialer.apk	/system_ext/priv-app/SprdDialer/SprdDialer.apk	com.android.dialer		ContentResolver.update,Global.put,Secure.put,System.put	43	34	non-uid1000（不经 31317 路径）
+TeleService.apk	/system/priv-app/TeleService/TeleService.apk	com.android.phone	android.uid.phone	ContentResolver.update,Global.put,Secure.put,System.put	45	33	non-uid1000（不经 31317 路径）
+ManagedProvisioning.apk	/system/priv-app/ManagedProvisioning/ManagedProvisioning.apk	com.android.managedprovisioning		ContentResolver.update,Global.put,Secure.put,System.put	25	20	non-uid1000（不经 31317 路径）
+kdxxj_yyts_xiaodu.apk	/system/app/kdxxj_yyts_xiaodu/kdxxj_yyts_xiaodu.apk	com.jxw.yyts		ContentResolver.update,Global.put,Secure.put	16	16	non-uid1000（不经 31317 路径）
+DreamCamera2.apk	/system_ext/app/DreamCamera2/DreamCamera2.apk	com.android.camera2		ContentResolver.update,Global.put,System.put	14	14	non-uid1000（不经 31317 路径）
+Launcher3QuickStep.apk	/system_ext/priv-app/Launcher3QuickStep/Launcher3QuickStep.apk	com.android.launcher3		ContentResolver.update,Global.put,Secure.put,System.put	20	13	non-uid1000（不经 31317 路径）
+NfcNci.apk	/system/app/NfcNci/NfcNci.apk	com.android.nfc	android.uid.nfc	ContentResolver.update,Global.put,Secure.put,System.put	11	11	non-uid1000（不经 31317 路径）
+SprdContactsProvider.apk	/system_ext/priv-app/SprdContactsProvider/SprdContactsProvider.apk	com.android.providers.contacts	android.uid.shared	ContentResolver.update,Global.put,Secure.put	16	10	non-uid1000（不经 31317 路径）
+kdxxj_tbfd_xiaodu.apk	/system/app/kdxxj_tbfd_xiaodu/kdxxj_tbfd_xiaodu.apk	com.jxw.tbfd		ContentResolver.update,Global.put,Secure.put,System.put	10	10	non-uid1000（不经 31317 路径）
+ThemePicker.apk	/system_ext/priv-app/ThemePicker/ThemePicker.apk	com.android.wallpaper		ContentResolver.update,Global.put,Secure.put,System.put	8	8	non-uid1000（不经 31317 路径）
+UnisocStk.apk	/system_ext/app/UnisocStk/UnisocStk.apk	com.android.stk	android.uid.phone	ContentResolver.update,Global.put	7	7	non-uid1000（不经 31317 路径）
+kdxxj_dcgd_xiaodu.apk	/system/app/kdxxj_dcgd_xiaodu/kdxxj_dcgd_xiaodu.apk	com.jxw.tbjc		ContentResolver.update,Global.put	6	6	non-uid1000（不经 31317 路径）
+MtpService.apk	/system/priv-app/MtpService/MtpService.apk	com.android.mtp	android.media	ContentResolver.update,Global.put	6	5	non-uid1000（不经 31317 路径）
+SprdCalendarProviderPrebuilt.apk	/system_ext/priv-app/SprdCalendarProviderPrebuilt/SprdCalendarProviderPrebuilt.apk	com.android.providers.calendar	android.uid.calendar	ContentResolver.update,Global.put	6	5	non-uid1000（不经 31317 路径）
+EmergencyInfo.apk	/system_ext/priv-app/EmergencyInfo/EmergencyInfo.apk	com.android.emergency	com.android.emergency.uid	ContentResolver.update,Global.put,Secure.put,System.put	7	4	non-uid1000（不经 31317 路径）
+ImsServiceEntitlement.apk	/product/priv-app/ImsServiceEntitlement/ImsServiceEntitlement.apk	com.android.imsserviceentitlement		ContentResolver.update,Global.put	7	4	non-uid1000（不经 31317 路径）
+LiveWallpapersPicker.apk	/system/app/LiveWallpapersPicker/LiveWallpapersPicker.apk	com.android.wallpaper.livepicker		ContentResolver.update,Global.put,System.put	4	4	non-uid1000（不经 31317 路径）
+PackageInstaller.apk	/system/priv-app/PackageInstaller/PackageInstaller.apk	com.android.packageinstaller		ContentResolver.update,Global.put,System.put	4	3	non-uid1000（不经 31317 路径）
+StorageManager.apk	/system_ext/priv-app/StorageManager/StorageManager.apk	com.android.storagemanager		ContentResolver.update,Global.put,Secure.put,System.put	3	3	non-uid1000（不经 31317 路径）
+Traceur.apk	/system/priv-app/Traceur/Traceur.apk	com.android.traceur		ContentResolver.update,Global.put,Secure.put,System.put	7	3	non-uid1000（不经 31317 路径）
+UniTelephony.apk	/system_ext/priv-app/UniTelephony/UniTelephony.apk	com.unisoc.phone	android.uid.phone	ContentResolver.update,Global.put,System.put	8	3	non-uid1000（不经 31317 路径）
+USCPhotosProvider.apk	/system_ext/app/USCPhotosProvider/USCPhotosProvider.apk	com.sprd.providers.photos	android.media	ContentResolver.update,Global.put,Secure.put,System.put	2	2	non-uid1000（不经 31317 路径）
+ExternalStorageProvider.apk	/system/priv-app/ExternalStorageProvider/ExternalStorageProvider.apk	com.android.externalstorage		ContentResolver.update,Global.put	3	1	non-uid1000（不经 31317 路径）
+MmsService.apk	/system/priv-app/MmsService/MmsService.apk	com.android.mms.service	android.uid.phone	ContentResolver.update,Global.put	1	1	non-uid1000（不经 31317 路径）
+Provision.apk	/system_ext/priv-app/Provision/Provision.apk	com.android.provision		Global.put	1	1	non-uid1000（不经 31317 路径）
+XDTest.apk	/system/app/XDTest/XDTest.apk	com.sprocomm.xdtest		ContentResolver.update,Global.put,Secure.put,System.put	1	1	non-uid1000（不经 31317 路径）
+ims.apk	/system_ext/priv-app/ims/ims.apk	com.spreadtrum.ims	android.uid.phone	ContentResolver.update,Global.put,System.put	2	1	non-uid1000（不经 31317 路径）
+NetworkStack.apk	/system/priv-app/NetworkStack/NetworkStack.apk	com.android.networkstack	android.uid.networkstack	ContentResolver.update,Global.put	3	0	non-uid1000（不经 31317 路径）

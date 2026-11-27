@@ -1,7 +1,9 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import json
 import re
 
-d = json.load(open('/sdcard/漏洞/analysis/audit.json'))
+d = json.load(open(_os.path.join(_REPO, 'analysis/audit.json')))
 
 # 1) 收集所有被组件当作 android:permission / readPermission / writePermission 引用的权限
 #    排除 android.permission.* 系统权限

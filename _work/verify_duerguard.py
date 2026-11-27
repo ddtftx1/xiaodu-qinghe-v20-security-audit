@@ -1,6 +1,8 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import json
 
-d = json.load(open('/sdcard/漏洞/analysis/audit.json'))
+d = json.load(open(_os.path.join(_REPO, 'analysis/audit.json')))
 
 print('=== DuerGuard 在 audit.json 中的原始记录 ===')
 for x in d:
@@ -20,7 +22,7 @@ for x in d:
             print()
 
 print('=== prov_unsafe.json 中所有 auth 值，搜 duerguard ===')
-prov = json.load(open('/sdcard/漏洞/analysis/prov_unsafe.json'))
+prov = json.load(open(_os.path.join(_REPO, 'analysis/prov_unsafe.json')))
 found = False
 for p in prov:
     s = json.dumps(p, ensure_ascii=False)

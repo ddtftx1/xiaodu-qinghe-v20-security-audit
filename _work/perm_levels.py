@@ -1,6 +1,8 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import os
 
-WORK = '/sdcard/漏洞/_work'
+WORK = _os.path.join(_REPO, '_work')
 
 EXISTING = {
     'com.sprd.validationtools': WORK + '/mmi_dec2/AndroidManifest.xml',

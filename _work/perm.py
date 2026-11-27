@@ -1,11 +1,13 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import re
 import os
 import subprocess
 
 # 递归找出所有 AndroidManifest.xml 中 permission 的 protectionLevel
-roots = ['/sdcard/漏洞/_work/mmi_dec/AndroidManifest.xml']
+roots = [_os.path.join(_REPO, '_work/mmi_dec/AndroidManifest.xml')]
 
-base = '/sdcard/漏洞/_work'
+base = _os.path.join(_REPO, '_work')
 found = []
 for d in os.listdir(base):
     p = os.path.join(base, d, 'AndroidManifest.xml')

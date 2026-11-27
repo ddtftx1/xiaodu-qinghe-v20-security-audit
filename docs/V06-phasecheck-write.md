@@ -126,5 +126,39 @@ adb shell am start -n \
 若业务确需外部调用（如产线 PC 工具），应：
 
 1. 添加 `android:permission="<signature|privileged>"` 级别权限
-2. 在 `onCreate` 中校验 `Binder.getCallingUid()`
-3. 对 `msg` 做严格白名单校验
+2. 对 `msg` 做严格白名单校验
+
+> ⚠️ **v1.2 勘误（E2）**：本节此前写的「在 `onCreate` 中校验
+> `Binder.getCallingUid()`」是**无效**的，与 V17 的 E1 是同一个错误。
+>
+> `Activity.onCreate()` 跑在主线程，不在 Binder 事务里，
+> `Binder.getCallingUid()` 返回的是**本进程 UID**（1000），对任何启动方恒为真。
+>
+> Activity 场景**有一个**可用的替代：
+>
+> ```java
+> @Override
+> protected void onCreate(Bundle bundle) {
+>     super.onCreate(bundle);
+>     // getCallingPackage() 来自 ActivityTaskManager 记录的真实启动方
+>     String caller = getCallingPackage();   // 外部启动时可能为 null
+>     if (caller == null || !ALLOWED_CALLER_PACKAGES.contains(caller)) {
+>         Log.w(TAG, "reject caller " + caller);
+>         finish();
+>         return;
+>     }
+>     ...
+> }
+> ```
+>
+> **注意三条限制**：
+>
+> 1. `getCallingPackage()` 只在「由另一个应用显式 startActivity」时有值；
+>    `am start`（shell）、`adb`、系统内部拉起、或 `startActivityForResult`
+>    之外的某些路径都会返回 `null` —— **判空是必须的**，不能把 null 当放行。
+> 2. 它返回的是**包名**不是 UID，同名包被卸载重装后无法区分。
+> 3. 它**不能**替代 `exported=false` 或签名权限。组件收敛永远是第一选择，
+>    `getCallingPackage()` 只是「必须保留外部入口」时的补偿手段。
+>
+> 换句话说：E2 的修正不是「换个 API 就安全了」，
+> 而是「代码层校验在这个场景下本来就不可靠，必须回到组件收敛」。

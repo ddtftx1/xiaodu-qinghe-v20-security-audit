@@ -1,7 +1,9 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import json
 
-d = json.load(open('/sdcard/漏洞/analysis/audit.json'))
-prov = json.load(open('/sdcard/漏洞/analysis/prov_unsafe.json'))
+d = json.load(open(_os.path.join(_REPO, 'analysis/audit.json')))
+prov = json.load(open(_os.path.join(_REPO, 'analysis/prov_unsafe.json')))
 
 print('=== 统计核对 ===')
 print()

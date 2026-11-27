@@ -15,6 +15,37 @@
 
 本次审计共确认 **19 个有效漏洞**（v1.0 收录 13 个，v1.1 新增 6 个）。
 
+**统计口径（v1.2 补，三个数必须能对上）**：
+
+| 维度 | 数字 | 说明 |
+|---|---|---|
+| 漏洞条目 | **19** | 编号 V01–V20，**V09 跳号** |
+| **独立根因** | **12** | 多个条目共享同一根因，见下 |
+| 实机验证 | **7** | 6 完整 ✅（V02/V06/V07/V10/V11/V12）+ 1 部分 ✅（V14） |
+| 静态确认 | 12 | 证据在仓库外或无法实机复现 |
+| 证据在仓库外 | **5** | V02/V05/V10/V14/V15 —— 见下 |
+
+> 📌 **19 条 → 12 个独立根因的归并关系**：
+>
+> | 根因 | 合并的条目 | 条数 |
+> |---|---|---|
+> | 自定义权限 `protectionLevel` 缺失 / 未声明 | V17、V19 | 2 → 1 |
+> | `PhoneBootReceiver` 不校验 action + URI 隐藏码可拉起 | V11、V12 | 2 → 1 |
+> | 导出的 phasecheck 写入组件（共用 `PhaseCheckParse`） | V06、V16 | 2 → 1 |
+> | 隐藏码广播拉起工程/产测界面 | V05、V08 | 2 → 1 |
+> | ContentProvider 写权限缺失 | V03、V04 | 2 → 1 |
+> | 其余各条独立 | V01、V02、V07、V10、V13、V14、V15、V18、V20 | 9 |
+>
+> 12 = 1+1+1+1+1+9。**这不是删条目，是说明「同一个修法能覆盖多条」**，
+> 便于排优先级：修 5 个根因即覆盖 10 条。
+>
+> 📌 **「证据在仓库外」的 5 条**：V02（PingActivity 需 UI 进入）、
+> V05（隐藏码需实体触发）、V10（实机写入后靠 UI 清除）、
+> V14（属性前置条件未满足）、V15（无 Frida/root 无法验证注入点）。
+> 这 5 条的 ✅ 标记依赖**仓库里没有的现场记录**，外部无法复核。
+> 按 §9 的原则「留一条查不到出处的 ✅，比降级难看」，v1.2 **不擅自降级**，
+> 但在此显式标注，让读者自己决定信任程度。
+
 **实机验证状态统计**（与下方索引表逐行对应）：
 
 | 状态 | 数量 | 条目 |
@@ -71,26 +102,50 @@
 漏洞/
 ├── README.md                 ← 本文件（总索引）
 ├── HANDOFF.md                ← 项目交接书（仓库状态/质量风险/接手 Checklist）
-├── docs/                     ← 每个漏洞的详细技术文档
+├── CHANGELOG.md              ← 版本变更记录
+├── LICENSE                   ← MIT
+├── docs/                     ← 每个漏洞的详细技术文档（18 个 .md）
 │   ├── V01-V04-misc-exports.md
-│   ├── V02-ping-activity.md
-│   ├── ...
+│   ├── V05-emstart-backdoor.md
+│   ├── V06-phasecheck-write.md
+│   ├── V07-qmmi-settings-nvram.md
+│   ├── V08-factory-mode-entry.md
+│   ├── V10-modem-assert-file-write.md
+│   ├── V11-V12-agingtest-launch.md
+│   ├── V13-srmi-binder-service.md
+│   ├── V13-native-srmi-audit.md            (v1.2)
+│   ├── V14-systemlog-exfil.md
+│   ├── V15-cmd-executor.md
 │   ├── V16-phasecheck-miscdata-write.md    (v1.1)
 │   ├── V17-save-phasecheck-permission.md   (v1.1)
 │   ├── V18-silent-reboot-surface.md        (v1.1)
 │   ├── V19-undeclared-perm-receiver.md     (v1.1)
-│   └── V20-prod-file-selinux-template.md   (v1.1)
+│   ├── V20-prod-file-selinux-template.md   (v1.1)
+│   ├── V21-settings-global-sink-audit.md   (v1.2)
+│   └── CVE-2024-31317-assessment.md
 ├── poc/                      ← 概念验证脚本
 │   ├── README.md             ← PoC 使用说明
 │   ├── poc.sh                ← 一键执行脚本（adb）
 │   ├── lib/                  ← 辅助库
 │   └── java/                 ← Java/Binder 客户端样例
 ├── _work/                    ← 反编译/分析工作区（脚本、jadx 产物）
-└── analysis/                 ← 审计原始数据（JSON）
+│   ├── sinks.py              ← (v1.2) engineermode 写入点扫描
+│   ├── fw_scan.py            ← (v1.2) 全固件 dex 层 Settings 粗筛
+│   └── sink_candidates.py    ← (v1.2) 与 audit.json 交叉过滤
+└── analysis/                 ← 审计原始数据
+    ├── README.md             ← (v1.2) 各文件口径说明
     ├── audit.json            ← 130 个 APK 的组件/权限清单
-    ├── prov_unsafe.json      ← 52 个真正无权限保护的 Provider
-    └── exec_callers.json     ← 全部 exec 调用点
+    ├── prov_unsafe.json      ← 52 个 exported="true" 且零保护的 Provider
+    ├── exec_callers.json     ← 全部 exec 调用点
+    ├── em_settings_sinks.tsv           ← (v1.2) 168 个写入点
+    ├── em_put_global.md                ← (v1.2) Settings.Global.put* 摘要
+    ├── settings_sinks_firmware.tsv     ← (v1.2) 全固件 43 APK 粗筛
+    └── settings_sink_candidates.tsv    ← (v1.2) 收窄至 8 个候选
 ```
+
+> 📌 **v1.2 修正**：此处原写 `V02-ping-activity.md`，该文件**不存在**
+> （V02 的内容在 `V01-V04-misc-exports.md` 的第 2 节）。已按实际文件列表重写，
+> 且每个条目都可通过 `ls docs/` 验证。
 
 ---
 
@@ -113,7 +168,32 @@
 > 这个区别影响修复方向：应当收紧 engineermode 内的调用点，而不是去检查权限授予。
 > 详见 `docs/CVE-2024-31317-assessment.md`。
 
-全量审计 130 个 APK 后，仍未找到能把 payload 送达 `settings put global hidden_api_blacklist_exemptions` 的路径。v1.1 复核对 `com.sprd.engineermode` 全部 60 处 `SystemPropertiesProxy.set` 与 6 处 `Settings.Global.put*` 逐条验证，**键名无一例外为硬编码**。
+全量审计 130 个 APK 后，仍未找到能把 payload 送达 `settings put global hidden_api_blacklist_exemptions` 的路径。
+
+> 📌 **v1.2 勘误（E6）**：v1.1 在这里写「对 `com.sprd.engineermode` 全部 **60 处**
+> `SystemPropertiesProxy.set` 与 **6 处** `Settings.Global.put*` 逐条验证」。
+> 这两个数字**不是实测值**，且当时**没有任何落盘清单**，无法复核。
+>
+> 本次已实测并落盘（`_work/sinks.py` → `analysis/em_settings_sinks.tsv`）：
+>
+> | API | v1.1 声称 | **v1.2 实测** |
+> |---|---|---|
+> | `SystemPropertiesProxy.set` | 60 | **136** |
+> | `Settings.Global.put*` | 6 | **17** |
+> | `Settings.System.put*` | — | 2 |
+> | `Runtime.exec` | — | 6 |
+> | 合计 | 66 | **161** |
+>
+> 逐条复核结论：**17 处 `Settings.Global.put*` 的键名 100% 可静态定值**，
+> 其中 6 处看似表达式 `getSetting(SettingsProxy.Global.PREFERRED_NETWORK_MODE, subId)`，
+> 追到 `SettingsProxy.getFieldValue()` 后确认是**反射硬编码字段名**；
+> 写 `adb_enabled` 的 4 处位于死代码 `UsbDebugImpl`。
+>
+> 另有 6 处 `Runtime.exec`，全部已核对调用点（见 `docs/V21-settings-global-sink-audit.md` §2）。
+>
+> 全固件层面另做了四形态扫描（`_work/fw_scan.py` + `_work/sink_candidates.py`）：
+> 130 APK → 43 个引用 `Settings$Global;` → 收窄 8 个「uid1000 + 有导出组件」候选
+> → **0 处变量键**。详见 `docs/V21-settings-global-sink-audit.md`。
 
 ---
 

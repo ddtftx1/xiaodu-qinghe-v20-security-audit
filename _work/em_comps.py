@@ -1,6 +1,8 @@
+import os as _os, sys as _sys
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import json
 
-d = json.load(open('/sdcard/漏洞/analysis/audit.json'))
+d = json.load(open(_os.path.join(_REPO, 'analysis/audit.json')))
 
 TARGET = 'com.sprd.engineermode'
 for x in d:

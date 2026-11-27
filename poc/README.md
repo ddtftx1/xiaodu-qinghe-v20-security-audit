@@ -15,24 +15,63 @@ poc/
     └── common.sh            # 公共函数（颜色/日志/回滚注册）
 ```
 
-## 一、shell 脚本（V01–V12）
+## 一、shell 脚本（V01–V20）
 
 ```bash
 # 推送到设备
 adb push poc.sh /data/local/tmp/
 
-# 默认 dry-run：只打印将执行的命令
+# 1) 只读断言（默认，安全；会真读，不改任何状态）
 adb shell sh /data/local/tmp/poc.sh
 
-# 真正执行
-adb shell sh /data/local/tmp/poc.sh --yes
+# 2) 连只读也只看计划
+adb shell sh /data/local/tmp/poc.sh --dry-run
+
+# 3) 同时跑破坏性项（需人工确认已备份）
+adb shell sh /data/local/tmp/poc.sh --destructive
 ```
 
-设计要点：
+### 三种模式的区别（v1.2 改造）
 
-- **默认 dry-run**，必须先看一遍输出
-- 破坏性操作（NVRAM / FactoryReset / 老化测试 Start）**不自动执行**，只打印命令
-- 每个漏洞都附带**回滚方法**
+| 模式 | 只读断言 | 触发类 | 破坏性 | 退出码 |
+|---|---|---|---|---|
+| 默认 | **真跑** | 身份够就跑 | 不跑 | 有 FAIL → 1 |
+| `--dry-run` | 只打印 | 只打印 | 不跑 | 0 |
+| `--destructive` | 真跑 | 真跑 | **真跑** | 有 FAIL → 1 |
+
+### 输出契约
+
+每项给出三态之一：
+
+```
+PASS  <断言名>
+FAIL  <断言名>  [失败原因]
+SKIP  <断言名>  [为什么跳过]
+```
+
+收尾打汇总表：
+
+```
+------------------------------------------------------------
+PASS=8  FAIL=0  SKIP=4
+------------------------------------------------------------
+结论：无 FAIL
+```
+
+**任一 FAIL → `exit 1`**，可以直接接 CI 或 `&&` 链。
+
+### SKIP 不等于通过
+
+`SKIP` 的常见原因：
+
+| 原因 | 说明 |
+|---|---|
+| 普通应用身份 | `dumpsys` / `settings get` / `am broadcast` 都会被权限检查拒，属于预期 |
+| `--dry-run` | 只看计划 |
+| 前置条件不满足 | 如 phasecheck 分区节点不存在 |
+
+在普通应用身份（UID 10xxx）下跑，正常情况下应该是 **0 FAIL + 若干 SKIP**；
+如果出现 FAIL，才是真的异常，值得追。
 
 ## 二、Java 客户端（V13 SrmiManager）
 

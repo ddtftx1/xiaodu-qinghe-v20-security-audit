@@ -2,12 +2,71 @@
 
 | 项 | 值 |
 |----|----|
-| **严重性** | 🟠 高（纵深防御缺口）|
+| **严重性** | 🟠 高（纵深防御缺口）→ **v1.2 上调见下** |
 | **CWE** | CWE-78 OS Command Injection（**当前不可注入**）|
 | **受影响应用** | `com.baidu.duershow.statistic` |
 | **UID** | **1000** |
 | **类** | `com.baidu.duershow.crab.util.CommandExecutor` |
 | **实机验证** | 静态确认 |
+
+> ⚠️ **v1.2 重定级（E8）：从 root 视角看，这是本机最接近「扳机」的代码。**
+>
+> v1.1 把它当成「纵深防御缺口」草草带过，理由是「当前不可注入」。但换到
+> **「如何在 uid 1000 里执行任意字符串」**这个目标下，它的形态是**完美**的：
+>
+> ```java
+> Runtime.getRuntime().exec("sh");            // 起一个 shell
+> dataOutputStream.write(str.getBytes());     // 把任意字符串写进 stdin
+> dataOutputStream.writeBytes("\n");
+> dataOutputStream.writeBytes("exit\n");
+> ```
+>
+> 这**正是** CVE-2024-31317 需要的原语形态：`settings put global
+> hidden_api_blacklist_exemptions "<payload>"` 只要作为 `str` 传进来就能执行。
+>
+> **所以正确的定级不是「不可注入的纵深防御」，而是「已上膛但保险扣着的扳机」。**
+>
+> ### 保险扣在哪：RSA 签名（v1.2 新发现）
+>
+> v1.1 写「唯一的可变部分是 `procName`（来自进程枚举）」，
+> 并称 `HardwareMonitor.setProcArray(JSONArray)`「**无任何内部调用者**」。
+>
+> **后者是错的。实测有调用者：`CommonUtil.java:536`。**
+>
+> ```
+> PullConfigThread.run() / CrabSDK.pullConfigManually()
+>   └─ HttpURLConnSender.pullFromServer(1)          ← POST 到 pullConfUrl
+>        └─ CommonUtil.parseResult(response)
+>             └─ 必须含 "<sign>:" 分隔
+>                  └─ RSAUtils.verify(body, sign)   ← SHA1withRSA，公钥硬编码
+>                       └─ JSON data.hw.proc 数组
+>                            └─ HardwareMonitor.setProcArray(...)
+>                                 └─ new Task(C.MEM_INFO, " dumpsys meminfo --local " + procName)
+>                                      └─ CommandExecutor.execCommand(cmd)   ← 到这里才执行
+> ```
+>
+> `RSAUtils.verify()` 用硬编码的 1024-bit RSA 公钥校验 `SHA1withRSA` 签名，
+> 私钥只在百度服务端。**offline 分支虽然是明文 HTTP，但签名校验与传输层无关，
+> 拦包改不了签名。**
+>
+> ### 修正后的定级
+>
+> | 维度 | 评价 |
+> |---|---|
+> | 原语完整度 | ⭐⭐⭐⭐⭐ 完美（`exec("sh")` + 任意字符串进 stdin） |
+> | 调用点数量 | 1 处（`CommonUtil.getReportByLineFromTask`） |
+> | 输入可控性 | ❌ 被 `SHA1withRSA` 签名锁死 |
+> | **一旦签名的锁被打开** | **立即升级为 uid 1000 任意命令执行 → 接 31317 → root** |
+>
+> 因此建议的表述是：**「形态完美、入口被签名锁死」**，而不是「不可注入」。
+> 它应该被单列为本项目**最需要持续关注的代码**，而不是埋在 19 条里当纵深防御看。
+>
+> 三种会让它立刻生效的情况：
+> 1. RSA 私钥泄漏（服务端侧）
+> 2. `parseResult` 被任何其它入口以无签名数据调用（当前只有 2 处调用点，均为网络拉取）
+> 3. 任何新增的 `execCommand(String)` 调用点
+>
+> 详见 `docs/V21-settings-global-sink-audit.md` §3。
 
 ---
 
